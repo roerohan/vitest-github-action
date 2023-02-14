@@ -3,6 +3,17 @@
   "version": "0.0.2",
   "description": "GitHub actions error and coverage reporter for vitest.",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "README.md",
+    "dist"
+  ],
   "scripts": {
     "test": "vitest",
     "coverage": "vitest --coverage",
