@@ -1,0 +1,40 @@
+{
+  "name": "vitest-github-action",
+  "version": "0.0.1",
+  "description": "GitHub actions error and coverage reporter for vitest.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "vitest",
+    "coverage": "vitest --coverage",
+    "lint": "eslint --ext .ts src example",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roerohan/vitest-github-action.git"
+  },
+  "keywords": [
+    "vitest",
+    "coverage",
+    "reporter",
+    "actions"
+  ],
+  "author": "https://github.com/roerohan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/roerohan/vitest-github-action/issues"
+  },
+  "homepage": "https://github.com/roerohan/vitest-github-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "vitest": "^0.28.5"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0",
+    "eslint": "^8.34.0",
+    "eslint-config-xo": "^0.43.1",
+    "eslint-config-xo-typescript": "^0.56.0",
+    "typescript": "^4.9.5"
+  }
+}
