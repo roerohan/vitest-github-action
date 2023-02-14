@@ -35,7 +35,7 @@ export default class GithubReporter implements Reporter {
 
 		formattedErrors.forEach(error => {
 			actionsError(
-				error.stack ?? 'Vitest Error',
+				error.stack ? `Stack trace: \n\n${error.stack}` : 'Vitest Error',
 				error.annotation,
 			);
 		});
