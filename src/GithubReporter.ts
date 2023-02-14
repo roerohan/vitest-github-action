@@ -1,5 +1,5 @@
-import type { Reporter, Vitest, File, Test, Task } from 'vitest';
-import { endGroup, startGroup, error as actionsError, type AnnotationProperties } from '@actions/core';
+import type {Reporter, Vitest, File, Test, Task} from 'vitest';
+import {endGroup, startGroup, error as actionsError, type AnnotationProperties} from '@actions/core';
 
 type TokenLocation = {
 	file: string;
@@ -7,7 +7,7 @@ type TokenLocation = {
 	col: number;
 };
 
-type FormattedError = { annotation: AnnotationProperties; stack: string };
+type FormattedError = {annotation: AnnotationProperties; stack: string};
 
 export default class GithubReporter implements Reporter {
 	ctx!: Vitest;
@@ -24,7 +24,7 @@ export default class GithubReporter implements Reporter {
 		startGroup('Vitest annotations:');
 
 		const tests = this.identifyTests(files);
-		const failedTests = tests.filter(({ result }) => result?.state === 'fail');
+		const failedTests = tests.filter(({result}) => result?.state === 'fail');
 		const formattedErrors = this.getFormattedErrors(failedTests);
 
 		formattedErrors.forEach(error => {
@@ -51,7 +51,7 @@ export default class GithubReporter implements Reporter {
 		return tests;
 	}
 
-	getFullNameOfTest(test: Task, name: string = ''): string {
+	getFullNameOfTest(test: Task, name = ''): string {
 		if (!test.suite) {
 			return '';
 		}
@@ -62,10 +62,10 @@ export default class GithubReporter implements Reporter {
 	}
 
 	getAllErrors(tests: Test[]) {
-		let errors: (Error & { file: Test['file'], testName: string })[] = [];
+		let errors: Array<Error & {file: Test['file']; testName: string}> = [];
 
 		tests.forEach(test => {
-			const errs = test.result?.errors?.map((error) => ({
+			const errs = test.result?.errors?.map(error => ({
 				...error,
 				file: test.file,
 				testName: this.getFullNameOfTest(test),
@@ -79,7 +79,7 @@ export default class GithubReporter implements Reporter {
 	}
 
 	getErrorLocation(stackTrace: string, fileName: string): TokenLocation | undefined {
-		const errorLine = stackTrace.split('\n').find((stackTraceLine) => stackTraceLine.includes(fileName)) ?? '';
+		const errorLine = stackTrace.split('\n').find(stackTraceLine => stackTraceLine.includes(fileName)) ?? '';
 		const bracketRegex = /\((.*):(\d+):(\d+)\)$/;
 		const atRegex = /at (.*):(\d+):(\d+)$/;
 		let match;
@@ -106,11 +106,11 @@ export default class GithubReporter implements Reporter {
 				return;
 			}
 
-			error.stack = this.removeANSIColors(error.stack);
-			error.message = this.removeANSIColors(error.message);
-			error.name = this.removeANSIColors(error.name);
+			error.stack = this.removeAnsiColors(error.stack);
+			error.message = this.removeAnsiColors(error.message);
+			error.name = this.removeAnsiColors(error.name);
 
-			const { file, line, col } = this.getErrorLocation(error.stack, error.file?.name ?? '') ?? {};
+			const {file, line, col} = this.getErrorLocation(error.stack, error.file?.name ?? '') ?? {};
 			if (file && line && col) {
 				const annotation: AnnotationProperties = {
 					file,
@@ -128,7 +128,8 @@ export default class GithubReporter implements Reporter {
 		return formattedErrors;
 	}
 
-	removeANSIColors(str: string): string {
+	removeAnsiColors(str: string): string {
+		// eslint-disable-next-line no-control-regex
 		const colorRegex = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g;
 		return str.replace(colorRegex, '');
 	}
