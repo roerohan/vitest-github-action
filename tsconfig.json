@@ -1,10 +1,11 @@
 {
     "compilerOptions": {
         "experimentalDecorators": true,
-        "outDir": "dist",
+        "outDir": "types",
         "module": "esnext",
         "target": "esnext",
         "strictNullChecks": true,
+        "emitDeclarationOnly": true,
         "emitDecoratorMetadata": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
