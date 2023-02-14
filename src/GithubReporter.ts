@@ -90,23 +90,33 @@ export default class GithubReporter implements Reporter {
 
 		const formattedErrors: FormattedError[] = [];
 		errors.forEach(error => {
-			if (error?.stack) {
-				const { file, line, col } = this.getErrorLocation(error.stack, error.file?.name ?? '') ?? {};
-				if (file && line && col) {
-					const annotation: AnnotationProperties = {
-						file,
-						startLine: line,
-						startColumn: col,
-						title: `${error.name}: ${error.message}`,
-					};
+			if (!error?.stack) {
+				return;
+			}
 
-					formattedErrors.push({
-						annotation,
-						stack: error.stack,
-					});
-				}
+			error.stack = this.removeANSIColors(error.stack);
+			error.message = this.removeANSIColors(error.message);
+			error.name = this.removeANSIColors(error.name);
+
+			const { file, line, col } = this.getErrorLocation(error.stack, error.file?.name ?? '') ?? {};
+			if (file && line && col) {
+				const annotation: AnnotationProperties = {
+					file,
+					startLine: line,
+					startColumn: col,
+					title: `${error.name}: ${error.message}`,
+				};
+
+				formattedErrors.push({
+					annotation,
+					stack: error.stack,
+				});
 			}
 		});
 		return formattedErrors;
+	}
+
+	removeANSIColors(str: string): string {
+		return str.replace('/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g', '');
 	}
 }
