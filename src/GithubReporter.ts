@@ -52,9 +52,9 @@ export default class GithubReporter implements Reporter {
 	}
 
 	getAllErrors(tests: Test[]) {
-		let errors: Error[] = [];
+		let errors: (Error & { file: Test['file'] })[] = [];
 		tests.forEach(test => {
-			const errs = test.result?.errors.map((error) => ({
+			const errs = test.result?.errors?.map((error) => ({
 				...error,
 				file: test.file,
 			}));
@@ -66,8 +66,8 @@ export default class GithubReporter implements Reporter {
 		return errors;
 	}
 
-	getErrorLocation(stackTrace: string, fileName?: string): TokenLocation | undefined {
-		const errorLine = stackTrace.split('\n').find((stackTraceLine) => stackTraceLine.includes(fileName));
+	getErrorLocation(stackTrace: string, fileName: string): TokenLocation | undefined {
+		const errorLine = stackTrace.split('\n').find((stackTraceLine) => stackTraceLine.includes(fileName)) ?? '';
 		const bracketRegex = /\((.*):(\d+):(\d+)\)$/;
 		const atRegex = /at (.*):(\d+):(\d+)$/;
 		let match;
@@ -91,7 +91,7 @@ export default class GithubReporter implements Reporter {
 		const formattedErrors: FormattedError[] = [];
 		errors.forEach(error => {
 			if (error?.stack) {
-				const { file, line, col } = this.getErrorLocation(error.stack, error.file.name) ?? {};
+				const { file, line, col } = this.getErrorLocation(error.stack, error.file?.name ?? '') ?? {};
 				if (file && line && col) {
 					const annotation: AnnotationProperties = {
 						file,
