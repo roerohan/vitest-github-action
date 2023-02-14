@@ -7,7 +7,8 @@
     "test": "vitest",
     "coverage": "vitest --coverage",
     "lint": "eslint --ext .ts src example",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",

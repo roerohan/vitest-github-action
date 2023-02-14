@@ -1,11 +1,10 @@
 {
     "compilerOptions": {
         "experimentalDecorators": true,
-        "outDir": "types",
+        "outDir": "dist",
         "module": "esnext",
         "target": "esnext",
         "strictNullChecks": true,
-        "emitDeclarationOnly": true,
         "emitDecoratorMetadata": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
@@ -18,8 +17,7 @@
         "removeComments": true,
         "allowJs": true,
         "types": [
-            "node",
-            "long"
+            "node"
         ],
         "lib": [
             "dom",
