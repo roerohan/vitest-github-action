@@ -51,12 +51,24 @@ export default class GithubReporter implements Reporter {
 		return tests;
 	}
 
+	getFullNameOfTest(test: Task, name: string = ''): string {
+		if (!test.suite) {
+			return '';
+		}
+
+		name = test.name;
+		const suiteName = this.getFullNameOfTest(test.suite, name);
+		return `${suiteName ? `${suiteName} > ` : ''}${name}`;
+	}
+
 	getAllErrors(tests: Test[]) {
-		let errors: (Error & { file: Test['file'] })[] = [];
+		let errors: (Error & { file: Test['file'], testName: string })[] = [];
+
 		tests.forEach(test => {
 			const errs = test.result?.errors?.map((error) => ({
 				...error,
 				file: test.file,
+				testName: this.getFullNameOfTest(test),
 			}));
 
 			if (errs?.length) {
@@ -104,7 +116,7 @@ export default class GithubReporter implements Reporter {
 					file,
 					startLine: line,
 					startColumn: col,
-					title: `${error.name}: ${error.message}`,
+					title: `${error.name}: ${error.testName}`,
 				};
 
 				formattedErrors.push({
