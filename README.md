@@ -81,11 +81,20 @@ npm install
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+You can use the `GithubReporter` exported by this package in your `vite.config.ts` or `vitest.config.ts` (or their JS equivalent) files to have your errors reported on your GitHub pull request.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+```ts
+import { defineConfig } from 'vitest/config';
+import { GithubReporter } from 'vitest-github-action';
 
-
+export default defineConfig({
+    test: {
+        reporters: process.env.GITHUB_ACTIONS
+            ? ['default', new GithubReporter()]
+            : 'default',
+    },
+});
+```
 
 <!-- ROADMAP -->
 ## Roadmap
