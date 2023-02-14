@@ -1,5 +1,5 @@
-import type {Reporter, Vitest, File, Test, Task} from 'vitest';
-import {endGroup, startGroup, error as actionsError, type AnnotationProperties} from '@actions/core';
+import type { Reporter, Vitest, File, Test, Task } from 'vitest';
+import { endGroup, startGroup, error as actionsError, type AnnotationProperties } from '@actions/core';
 
 type TokenLocation = {
 	file: string;
@@ -7,7 +7,7 @@ type TokenLocation = {
 	col: number;
 };
 
-type FormattedError = {annotation: AnnotationProperties; stack: string};
+type FormattedError = { annotation: AnnotationProperties; stack: string };
 
 export default class GithubReporter implements Reporter {
 	ctx!: Vitest;
@@ -23,14 +23,8 @@ export default class GithubReporter implements Reporter {
 
 		startGroup('Vitest annotations:');
 
-		// Console.log(files);
-		// console.log(files[0].tasks);
-		// console.log(files[0].tasks[0].tasks);
-		// console.log(files[0].tasks[0].tasks[0].tasks);
-		// console.log(files[0].tasks[0].tasks[0].tasks[1].result.error);
-
 		const tests = this.identifyTests(files);
-		const failedTests = tests.filter(({result}) => result?.state === 'fail');
+		const failedTests = tests.filter(({ result }) => result?.state === 'fail');
 		const formattedErrors = this.getFormattedErrors(failedTests);
 
 		formattedErrors.forEach(error => {
@@ -40,7 +34,7 @@ export default class GithubReporter implements Reporter {
 			);
 		});
 
-		console.log(formattedErrors);
+		console.log('Formatted Errors', formattedErrors);
 
 		endGroup();
 	}
@@ -60,8 +54,11 @@ export default class GithubReporter implements Reporter {
 	getAllErrors(tests: Test[]) {
 		let errors: Error[] = [];
 		tests.forEach(test => {
-			const errs = test.result?.errors;
-			console.log(errs, test.result);
+			const errs = test.result?.errors.map((error) => ({
+				...error,
+				file: test.file,
+			}));
+
 			if (errs?.length) {
 				errors = errors.concat(errs);
 			}
@@ -69,8 +66,8 @@ export default class GithubReporter implements Reporter {
 		return errors;
 	}
 
-	getErrorLocation(stackTrace: string): TokenLocation | undefined {
-		const errorLine = stackTrace.split('\n')[1];
+	getErrorLocation(stackTrace: string, fileName?: string): TokenLocation | undefined {
+		const errorLine = stackTrace.split('\n').find((stackTraceLine) => stackTraceLine.includes(fileName));
 		const bracketRegex = /\((.*):(\d+):(\d+)\)$/;
 		const atRegex = /at (.*):(\d+):(\d+)$/;
 		let match;
@@ -94,7 +91,7 @@ export default class GithubReporter implements Reporter {
 		const formattedErrors: FormattedError[] = [];
 		errors.forEach(error => {
 			if (error?.stack) {
-				const {file, line, col} = this.getErrorLocation(error.stack) ?? {};
+				const { file, line, col } = this.getErrorLocation(error.stack, error.file.name) ?? {};
 				if (file && line && col) {
 					const annotation: AnnotationProperties = {
 						file,
