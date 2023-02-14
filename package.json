@@ -1,6 +1,6 @@
 {
   "name": "vitest-github-action",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "GitHub actions error and coverage reporter for vitest.",
   "main": "dist/index.cjs.js",
   "types": "types/index.d.ts",
