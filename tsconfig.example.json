@@ -3,7 +3,7 @@
     "include": [
         "./example/**/*.ts",
         "vitest.config.ts",
-        "vite.config.ts"
+        "tsup.config.ts"
     ],
     "exclude": [
         "node_modules"
