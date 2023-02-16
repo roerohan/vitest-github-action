@@ -18,7 +18,7 @@
   "scripts": {
     "test": "vitest",
     "coverage": "vitest --coverage",
-    "lint": "eslint --ext .ts src example",
+    "lint": "eslint --ext .ts src example *.config.ts",
     "lint:fix": "npm run lint -- --fix",
     "build": "tsup"
   },
