@@ -1,5 +1,5 @@
 node_modules/
 dist/*
-!dist/action.js
+!dist/action.mjs
 build/
 types/
