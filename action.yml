@@ -1,5 +1,5 @@
 name: 'roerohan/vitest'
-description: 'Run vitest tests and report the results and coverage for a PR'.
+description: 'Run vitest tests and report the results and coverage on pull requests raised on your repository'.
 author: 'roerohan'
 inputs:
   config:
