@@ -1,14 +1,23 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import * as core from '@actions/core';
-import { exec } from 'child_process';
-import { readFile } from 'fs/promises';
-import type { UserConfig } from 'vitest';
+import { startVitest } from 'vitest/node';
+import GithubReporter from './GithubReporter';
 
 async function main(): Promise<void> {
 	const configFile: string = core.getInput('config');
-	console.log(configFile);
+	// const coverage = Boolean(core.getInput('coverage'));
 
-	const config: UserConfig = await readFile(configFile);
-	console.log(config);
+	const vitest = await startVitest('test', [], {
+		watch: false,
+		config: configFile,
+	}, {
+		test: {
+			reporters: [new GithubReporter(), 'default'],
+		},
+	});
+
+	await vitest?.close();
 }
 
 void main();
+
