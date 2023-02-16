@@ -10,12 +10,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-    - name: Run `npm install`
-      run: |
-        npm install
-        npm run build
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
 
-    - name: Run vitest and report issues
-      uses: ./
-      with:
-        config: ./vitest.config.ts
+      - name: Run `npm install`
+        run: |
+          npm install
+          npm run build
+
+      - name: Run vitest and report issues
+        uses: ./
+        with:
+          config: ./vitest.config.ts
