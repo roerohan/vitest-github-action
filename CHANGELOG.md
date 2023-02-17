@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/roerohan/vitest-github-action/compare/v1.0.4...v1.0.5) (2023-02-17)
+
+
+### Bug Fixes
+
+* use cjs build ([f60d3ad](https://github.com/roerohan/vitest-github-action/commit/f60d3ad55604f57466d3e54a276c9c844e1e2cbd))
+
 ## [1.0.4](https://github.com/roerohan/vitest-github-action/compare/v1.0.3...v1.0.4) (2023-02-17)
 
 
