@@ -1,3 +1,10 @@
+## [1.0.14](https://github.com/roerohan/vitest-github-action/compare/v1.0.13...v1.0.14) (2023-02-17)
+
+
+### Bug Fixes
+
+* add action.yml ([755bf38](https://github.com/roerohan/vitest-github-action/commit/755bf38cf49b2186fc45e3ba4dfd13ce1c8c53fc))
+
 ## [1.0.13](https://github.com/roerohan/vitest-github-action/compare/v1.0.12...v1.0.13) (2023-02-17)
 
 
