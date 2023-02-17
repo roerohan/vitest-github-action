@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/roerohan/vitest-github-action/compare/v1.0.1...v1.0.2) (2023-02-17)
+
+
+### Bug Fixes
+
+* create new release ([b5aa949](https://github.com/roerohan/vitest-github-action/commit/b5aa949e25534fb1ccaa2798c221564e16289efe))
+
 ## [1.0.1](https://github.com/roerohan/vitest-github-action/compare/v1.0.0...v1.0.1) (2023-02-17)
 
 
