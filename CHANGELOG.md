@@ -1,3 +1,10 @@
+## [1.0.9](https://github.com/roerohan/vitest-github-action/compare/v1.0.8...v1.0.9) (2023-02-17)
+
+
+### Bug Fixes
+
+* run publish on push main ([d6f9515](https://github.com/roerohan/vitest-github-action/commit/d6f9515dfd753c251e2056c2c5333efe73c53b0d))
+
 ## [1.0.8](https://github.com/roerohan/vitest-github-action/compare/v1.0.7...v1.0.8) (2023-02-17)
 
 
