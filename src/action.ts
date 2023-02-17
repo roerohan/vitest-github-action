@@ -1,4 +1,3 @@
-
 import {getInput} from '@actions/core';
 import {startVitest} from 'vitest/node';
 import GithubReporter from './GithubReporter';
