@@ -1,3 +1,10 @@
+## [1.0.17](https://github.com/roerohan/vitest-github-action/compare/v1.0.16...v1.0.17) (2023-02-17)
+
+
+### Bug Fixes
+
+* create new release ([cdf1964](https://github.com/roerohan/vitest-github-action/commit/cdf1964c2b627059054c05ebff456a7ea3a3eeea))
+
 ## [1.0.16](https://github.com/roerohan/vitest-github-action/compare/v1.0.15...v1.0.16) (2023-02-17)
 
 
