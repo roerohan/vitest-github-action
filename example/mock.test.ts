@@ -12,11 +12,11 @@ describe('Given sum() exists', () => {
 			sum();
 		});
 
-		test('sum() should be called', () => {
+		test('Then sum() should be called', () => {
 			expect(sum).toBeCalled();
 		});
 
-		test('sum() should not be called', () => {
+		test('Then sum() should not be called', () => {
 			expect(sum).not.toBeCalled();
 		});
 	});
