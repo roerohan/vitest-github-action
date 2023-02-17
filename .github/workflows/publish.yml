@@ -22,7 +22,7 @@ jobs:
       - name: Install deps and build
         run: |
           npm ci && npm run build
-          mv dist/action.mjs dist/index.js
+          cp dist/action.mjs dist/index.js
 
       # Compile dist/index.js and bundle with action.yml
       # Force push major and minor tags, e.g. v1, v1.0
