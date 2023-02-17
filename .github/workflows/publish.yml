@@ -21,6 +21,11 @@ jobs:
         run: |
           npm ci && npm run build
 
+      - name: Setup git config
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Push to tag
         run: |
           rm -rf .gitignore
