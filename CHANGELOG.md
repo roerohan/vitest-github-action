@@ -1,3 +1,13 @@
+## [1.0.7](https://github.com/roerohan/vitest-github-action/compare/v1.0.6...v1.0.7) (2023-02-17)
+
+
+### Bug Fixes
+
+* action ([e5446dd](https://github.com/roerohan/vitest-github-action/commit/e5446dd20f822ff419a9af0d2ed7150c91743275))
+* added git config ([852641d](https://github.com/roerohan/vitest-github-action/commit/852641d041ab364099dd3494ffa17a036788ef73))
+* update push to tag action ([15fcbbf](https://github.com/roerohan/vitest-github-action/commit/15fcbbf7e4a3aff0109c1824f7610aaabd3157f0))
+* update push to tag action ([b4bc448](https://github.com/roerohan/vitest-github-action/commit/b4bc448129157ccfe1d66a535e41f1e9ee9bf3ec))
+
 ## [1.0.6](https://github.com/roerohan/vitest-github-action/compare/v1.0.5...v1.0.6) (2023-02-17)
 
 
