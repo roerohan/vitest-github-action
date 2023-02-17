@@ -4,6 +4,14 @@
 ### Bug Fixes
 
 * remove unused code in workflow ([aa29bfa](https://github.com/roerohan/vitest-github-action/commit/aa29bfaea32cfb6c89270b44df6405380d49cc91))
+* remove unused line ([4d0ef3f](https://github.com/roerohan/vitest-github-action/commit/4d0ef3f89da706bacbfe5087fdc379903564af1c))
+
+## [1.0.16](https://github.com/roerohan/vitest-github-action/compare/v1.0.15...v1.0.16) (2023-02-17)
+
+
+### Bug Fixes
+
+* remove unused code in workflow ([aa29bfa](https://github.com/roerohan/vitest-github-action/commit/aa29bfaea32cfb6c89270b44df6405380d49cc91))
 
 ## [1.0.15](https://github.com/roerohan/vitest-github-action/compare/v1.0.14...v1.0.15) (2023-02-17)
 
