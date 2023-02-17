@@ -1,3 +1,10 @@
+## [1.0.13](https://github.com/roerohan/vitest-github-action/compare/v1.0.12...v1.0.13) (2023-02-17)
+
+
+### Bug Fixes
+
+* separate commit changes step ([967ee9d](https://github.com/roerohan/vitest-github-action/commit/967ee9d05f7f7bc2a648dd756466bbe23e8f47f7))
+
 ## [1.0.12](https://github.com/roerohan/vitest-github-action/compare/v1.0.11...v1.0.12) (2023-02-17)
 
 
