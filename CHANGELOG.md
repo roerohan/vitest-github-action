@@ -1,3 +1,11 @@
+## [1.0.4](https://github.com/roerohan/vitest-github-action/compare/v1.0.3...v1.0.4) (2023-02-17)
+
+
+### Bug Fixes
+
+* modified tsup config ([92e8de8](https://github.com/roerohan/vitest-github-action/commit/92e8de8d27ac488efe7da2a9042f2ba0bd044723))
+* update tsup config to disable code splitting ([d9d23d4](https://github.com/roerohan/vitest-github-action/commit/d9d23d4b03afd5f6c7defac1813d48b87a21229b))
+
 ## [1.0.3](https://github.com/roerohan/vitest-github-action/compare/v1.0.2...v1.0.3) (2023-02-17)
 
 
