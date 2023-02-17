@@ -1,3 +1,11 @@
+## [1.0.1](https://github.com/roerohan/vitest-github-action/compare/v1.0.0...v1.0.1) (2023-02-17)
+
+
+### Bug Fixes
+
+* use action ([cf5e311](https://github.com/roerohan/vitest-github-action/commit/cf5e31120207e9f7e3112df136b770b2aa473854))
+* use action ([5b37e6b](https://github.com/roerohan/vitest-github-action/commit/5b37e6b4b7eb7ae938ba2794f7216542638059e5))
+
 # 1.0.0 (2023-02-17)
 
 
