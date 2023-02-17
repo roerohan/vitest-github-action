@@ -31,7 +31,7 @@ jobs:
         run: |
           rm -rf .gitignore
           git rm -r --cached . 
-          git add ./package.json ./node_modules ./dist
+          git add ./package.json ./node_modules ./dist ./action.yml
       
       - name: Commit changes
         run: |
