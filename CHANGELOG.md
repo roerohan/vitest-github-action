@@ -1,3 +1,11 @@
+## [1.0.10](https://github.com/roerohan/vitest-github-action/compare/v1.0.9...v1.0.10) (2023-02-17)
+
+
+### Bug Fixes
+
+* action publish ([23ff8e5](https://github.com/roerohan/vitest-github-action/commit/23ff8e50f30bfa5b8afbc0cab77539044942be80))
+* tsup lint ([d60601f](https://github.com/roerohan/vitest-github-action/commit/d60601fe7a77466f04e05f9b9ab071af6a63f688))
+
 ## [1.0.9](https://github.com/roerohan/vitest-github-action/compare/v1.0.8...v1.0.9) (2023-02-17)
 
 
