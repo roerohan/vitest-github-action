@@ -1,3 +1,10 @@
+## [1.0.11](https://github.com/roerohan/vitest-github-action/compare/v1.0.10...v1.0.11) (2023-02-17)
+
+
+### Bug Fixes
+
+* split job ([f30359c](https://github.com/roerohan/vitest-github-action/commit/f30359c389521a28f058eba1128907caaba165a4))
+
 ## [1.0.10](https://github.com/roerohan/vitest-github-action/compare/v1.0.9...v1.0.10) (2023-02-17)
 
 
