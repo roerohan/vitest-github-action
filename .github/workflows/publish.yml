@@ -34,6 +34,7 @@ jobs:
           git add ./package.json ./node_modules ./dist
       
       - name: Push to tag
+        run: |
           git commit -m "chore: add action"
           git tag -d v1
           git tag -a v1 -m "chore: update v1 tag"
