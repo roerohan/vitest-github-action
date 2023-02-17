@@ -11,11 +11,8 @@ export default defineConfig([
 	},
 	{
 		entry: ['src/action.ts'],
-		target: 'node14.16',
-		noExternal: ['@actions/core', 'vitest/node'],
-		external: ['@vitest/ui', '@vitest/browser'],
-		splitting: false,
-		format: ['esm', 'cjs'],
+		target: 'node18',
+		format: ['esm'],
 		dts: true,
 		sourcemap: true,
 		clean: true,

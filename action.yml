@@ -10,8 +10,8 @@ inputs:
     description: 'When `coverage` is set to true, the coverage report is attached to the PR.'
     default: 'true'
 runs:
-  using: 'node16'
-  main: 'dist/action.js'
+  using: 'node18'
+  main: 'dist/action.mjs'
 branding:
   icon: 'check-square'
   color: 'green'
