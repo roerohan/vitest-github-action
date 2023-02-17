@@ -1,4 +1,4 @@
-import {defineConfig} from 'tsup';
+import { defineConfig } from 'tsup';
 
 export default defineConfig([
 	{
@@ -12,6 +12,8 @@ export default defineConfig([
 	{
 		entry: ['src/action.ts'],
 		target: 'node14.16',
+		noExternal: ['@actions/core', 'vitest/node'],
+		external: ['@vitest/ui', '@vitest/browser'],
 		format: ['esm'],
 		dts: true,
 		sourcemap: true,
