@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/roerohan/vitest-github-action/compare/v1.0.7...v1.0.8) (2023-02-17)
+
+
+### Bug Fixes
+
+* run action on push tags ([cc330c8](https://github.com/roerohan/vitest-github-action/commit/cc330c8d08ea412e1fe1a70c316223534ff7e8e1))
+
 ## [1.0.7](https://github.com/roerohan/vitest-github-action/compare/v1.0.6...v1.0.7) (2023-02-17)
 
 
