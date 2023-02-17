@@ -15,7 +15,7 @@ export default defineConfig([
 		noExternal: ['@actions/core', 'vitest/node'],
 		external: ['@vitest/ui', '@vitest/browser'],
 		splitting: false,
-		format: ['esm'],
+		format: ['esm', 'cjs'],
 		dts: true,
 		sourcemap: true,
 		clean: true,

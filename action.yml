@@ -11,7 +11,7 @@ inputs:
     default: 'true'
 runs:
   using: 'node16'
-  main: 'dist/action.mjs'
+  main: 'dist/action.js'
 branding:
   icon: 'check-square'
   color: 'green'
