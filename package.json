@@ -16,7 +16,7 @@
     "dist"
   ],
   "scripts": {
-    "test": "jest",
+    "test": "vitest",
     "coverage": "vitest --coverage",
     "lint": "eslint . --ext .ts --ext .js",
     "lint:fix": "npm run lint -- --fix",
