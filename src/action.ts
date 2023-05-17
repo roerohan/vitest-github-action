@@ -19,7 +19,7 @@ async function main(): Promise<void> {
 	// 	});
 	//
 	// 	await vitest?.close();
-	console.log(await $`echo $GITHUB_WORKSPACE`, await $`echo /github/workspace`, await $`echo /`);
+	console.log(await $`echo $GITHUB_WORKSPACE`, await $`ls /github/workspace`, await $`ls /`);
 	console.log(await $`npx vitest`);
 }
 
