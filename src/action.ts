@@ -5,20 +5,24 @@ import GithubReporter from './GithubReporter';
 
 async function main(): Promise<void> {
 	const configFile: string = getInput('config');
+	const actionsReporterPath = '/tmp/reporter.ts';
 	// Const coverage = Boolean(getInput('coverage'));
 
 	console.log(await $`pwd`, await $`ls`, await $`ls ..`);
-	const vitest = await startVitest('test', [], {
-		watch: false,
-		config: configFile,
-	}, {
-		test: {
-			reporters: [new GithubReporter(), 'default'],
-		},
-	});
-
-	await vitest?.close();
+	// 	Const vitest = await startVitest('test', [], {
+	// 		watch: false,
+	// 		config: configFile,
+	// 	}, {
+	// 		test: {
+	// 			reporters: [new GithubReporter(), 'default'],
+	// 		},
+	// 	});
+	//
+	// 	await vitest?.close();
+	console.log(await $`echo $GITHUB_WORKSPACE`, await $`echo /github/workspace`, await $`echo /`);
+	console.log(await $`npx vitest`);
 }
 
 void main();
 
+export default GithubReporter;
