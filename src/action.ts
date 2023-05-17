@@ -5,10 +5,11 @@ import GithubReporter from './GithubReporter';
 
 async function main(): Promise<void> {
 	const configFile: string = getInput('config');
-	const actionsReporterPath = '/tmp/reporter.ts';
 	// Const coverage = Boolean(getInput('coverage'));
 
-	console.log(await $`pwd`, await $`ls`, await $`ls ..`);
+	await $`npm install vitest-github-action`;
+	await $`npx vitest --reporter ./node_modules/vitest-github-action/dist/index.js`;
+
 	// 	Const vitest = await startVitest('test', [], {
 	// 		watch: false,
 	// 		config: configFile,
@@ -19,8 +20,6 @@ async function main(): Promise<void> {
 	// 	});
 	//
 	// 	await vitest?.close();
-	console.log(await $`echo $GITHUB_WORKSPACE`, await $`ls /github/workspace`, await $`ls /`);
-	console.log(await $`npx vitest`);
 }
 
 void main();
