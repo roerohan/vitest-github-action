@@ -1,6 +1,7 @@
 // src/action.ts
 import { getInput } from "@actions/core";
 import { startVitest } from "vitest/node";
+import { $ } from "execa";
 
 // src/GithubReporter.ts
 import { endGroup, startGroup, error as actionsError } from "@actions/core";
@@ -104,7 +105,7 @@ ${error.stack}` : "Vitest Error",
     return formattedErrors;
   }
   removeAnsiColors(str) {
-    const colorRegex = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g;
+    const colorRegex = /^$/;
     return str.replace(colorRegex, "");
   }
 };
@@ -112,6 +113,7 @@ ${error.stack}` : "Vitest Error",
 // src/action.ts
 async function main() {
   const configFile = getInput("config");
+  console.log(await $`pwd`, await $`ls`, await $`ls ..`);
   const vitest = await startVitest("test", [], {
     watch: false,
     config: configFile
