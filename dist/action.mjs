@@ -1,6 +1,6 @@
 // src/action.ts
 import { getInput } from "@actions/core";
-import { $ } from "execa";
+import { startVitest } from "vitest/node";
 
 // src/GithubReporter.ts
 import { endGroup, startGroup, error as actionsError } from "@actions/core";
@@ -112,12 +112,15 @@ ${error.stack}` : "Vitest Error",
 // src/action.ts
 async function main() {
   const configFile = getInput("config");
-  await $`npm install vitest-github-action`;
-  await $`npx vitest --reporter ./node_modules/vitest-github-action/dist/index.js`;
+  const vitest = await startVitest("test", [], {
+    watch: false,
+    config: configFile
+  }, {
+    test: {
+      reporters: [new GithubReporter(), "default"]
+    }
+  });
+  await vitest?.close();
 }
 void main();
-var action_default = GithubReporter;
-export {
-  action_default as default
-};
 //# sourceMappingURL=action.mjs.map
