@@ -26,8 +26,6 @@ jobs:
 
       - name: Run vitest and report issues
         uses: roerohan/vitest-github-action@v1
-        run: |
-          npm ls vitest
         with:
           config: ./vitest.config.ts
 
