@@ -1,4 +1,4 @@
-name: 'Run vitest tests'
+name: "Run vitest tests"
 on:
   pull_request:
     branches:
@@ -23,6 +23,20 @@ jobs:
       #   uses: ./
       #   with:
       #     config: ./vitest.config.ts
+
+      - name: Debugging
+        run: |
+          echo "Listing files in example directory"
+          ls ./example
+
+          echo "Logging all files in example directory"
+          cat ./example/*.ts
+
+          echo "Logging action.mjs"
+          cat ./dist/action.mjs
+
+          echo "Logging vitest config"
+          cat ./vitest.config.ts
 
       - name: Run vitest and report issues
         uses: roerohan/vitest-github-action@v1
