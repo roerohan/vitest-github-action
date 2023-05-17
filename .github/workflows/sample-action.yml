@@ -19,10 +19,10 @@ jobs:
           npm install
           npm run build
 
-      - name: Run vitest and report issues
-        uses: ./
-        with:
-          config: ./vitest.config.ts
+      # - name: Run vitest and report issues
+      #   uses: ./
+      #   with:
+      #     config: ./vitest.config.ts
 
       - name: Run vitest and report issues
         if: always()
@@ -30,6 +30,6 @@ jobs:
         with:
           config: ./vitest.config.ts
 
-      - name: Run vitest
-        if: always()
-        run: npx vitest
+      # - name: Run vitest
+      #   if: always()
+      #   run: npx vitest
