@@ -7,7 +7,7 @@ async function main(): Promise<void> {
 	const configFile: string = getInput('config');
 	// Const coverage = Boolean(getInput('coverage'));
 
-	console.log($`pwd`, $`ls`, $`ls ..`);
+	console.log(await $`pwd`, await $`ls`, await $`ls ..`);
 	const vitest = await startVitest('test', [], {
 		watch: false,
 		config: configFile,
