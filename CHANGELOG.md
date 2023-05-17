@@ -1,3 +1,26 @@
+# [1.1.0](https://github.com/roerohan/vitest-github-action/compare/v1.0.17...v1.1.0) (2023-05-17)
+
+
+### Bug Fixes
+
+* always run all actions ([c26442d](https://github.com/roerohan/vitest-github-action/commit/c26442d24ce844082ae09f357589c10d20a8fc68))
+* can't have both uses and run ([4216e77](https://github.com/roerohan/vitest-github-action/commit/4216e77ded29014e6397552a9965530a8826f114))
+* re-trigger tests ([b47719a](https://github.com/roerohan/vitest-github-action/commit/b47719adee4a5db5084637b34b77bea6241293c6))
+* temporarily use ./ ([207a503](https://github.com/roerohan/vitest-github-action/commit/207a503dbb45b5ffb74b7787263b865c4dd549ae))
+* **temp:** remove ANSI color removal ([ef646f3](https://github.com/roerohan/vitest-github-action/commit/ef646f3ed7595c5b7969f5a77a8d3470095f4ce0))
+* update config ([1251ef3](https://github.com/roerohan/vitest-github-action/commit/1251ef33949023a5c419b614fcfcfbd4aa91497c))
+* update sample action ([99293ec](https://github.com/roerohan/vitest-github-action/commit/99293ecd1ca498f0b54defd4cae2854e73291eff))
+* use other action ([41b06e8](https://github.com/roerohan/vitest-github-action/commit/41b06e8045b76ac366992db90ff5452e32003657))
+* use public action temp ([d37f4e1](https://github.com/roerohan/vitest-github-action/commit/d37f4e1c3e4934940a4c4b2e72b06ac4e4eefd96))
+* use public sample action ([ab62033](https://github.com/roerohan/vitest-github-action/commit/ab62033654b2f96fa33e53064c65e211cb2188da))
+
+
+### Features
+
+* get information about running dir ([4534227](https://github.com/roerohan/vitest-github-action/commit/453422767853d64074eb8ca06d29dd11f516ca7d))
+* get information about running dir ([b08dfe2](https://github.com/roerohan/vitest-github-action/commit/b08dfe271a95e69a7eff907f8742238f39b99f0e))
+* update package ([404c05a](https://github.com/roerohan/vitest-github-action/commit/404c05a8b23280a895ebb39dcdb5926cb997deb7))
+
 ## [1.0.17](https://github.com/roerohan/vitest-github-action/compare/v1.0.16...v1.0.17) (2023-02-17)
 
 
