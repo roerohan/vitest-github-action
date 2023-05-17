@@ -1,3 +1,12 @@
+## [1.1.1](https://github.com/roerohan/vitest-github-action/compare/v1.1.0...v1.1.1) (2023-05-17)
+
+
+### Bug Fixes
+
+* npm install and use action ([3ae319a](https://github.com/roerohan/vitest-github-action/commit/3ae319a8408dcafb7a1e6328e60a5d962e9e637b))
+* re-trigger tests ([571d93e](https://github.com/roerohan/vitest-github-action/commit/571d93e5e7ec0fcee89d5c962e0a63db0319faf4))
+* update action.mjs [skip ci] ([e3c8d30](https://github.com/roerohan/vitest-github-action/commit/e3c8d301a3679c3f384d43f326e88d7648ac2fe0))
+
 # [1.1.0](https://github.com/roerohan/vitest-github-action/compare/v1.0.17...v1.1.0) (2023-05-17)
 
 
