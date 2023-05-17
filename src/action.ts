@@ -1,12 +1,13 @@
-
 import {getInput} from '@actions/core';
 import {startVitest} from 'vitest/node';
+import {$} from 'execa';
 import GithubReporter from './GithubReporter';
 
 async function main(): Promise<void> {
 	const configFile: string = getInput('config');
 	// Const coverage = Boolean(getInput('coverage'));
 
+	console.log($`pwd`, $`ls`, $`ls ..`);
 	const vitest = await startVitest('test', [], {
 		watch: false,
 		config: configFile,
