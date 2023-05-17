@@ -25,9 +25,11 @@ jobs:
           config: ./vitest.config.ts
 
       - name: Run vitest and report issues
+        if: always()
         uses: roerohan/vitest-github-action@v1
         with:
           config: ./vitest.config.ts
 
       - name: Run vitest
+        if: always()
         run: npx vitest
