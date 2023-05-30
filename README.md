@@ -183,7 +183,9 @@ export default defineConfig({
 });
 ```
 
-Upon adding this configuration, the coverage report will be generated and commented on the PR.
+Upon adding this configuration, the coverage report will be generated and commented on the PR. To run this, just run `npm run coverage` in your action.
+
+> NOTE: Make sure that the `GITHUB_TOKEN` is set to `${{ secrets.GITHUB_TOKEN }}` in the action where you run `npm run coverage`.
 
 <!-- ROADMAP -->
 
