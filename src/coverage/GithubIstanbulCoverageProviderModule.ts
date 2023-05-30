@@ -14,6 +14,7 @@ import libReport from 'istanbul-lib-report';
 import reports from 'istanbul-reports';
 import GithubIstanbulCoverageReporter from './GithubIstanbulCoverageReporter';
 import GithubSummaryIstanbulCoverageReporter from './GithubSummaryIstanbulCoverageReporter';
+import github from "@actions/github";
 
 const GithubIstanbulCoverageProviderModule: CoverageProviderModule = {
 	getProvider(): CoverageProvider {
@@ -24,6 +25,10 @@ const GithubIstanbulCoverageProviderModule: CoverageProviderModule = {
 };
 
 type Options = ResolvedCoverageOptions<'istanbul'>;
+
+export type Octokit = ReturnType<typeof github.getOctokit>;
+export type Github = typeof github;
+const octokit: Octokit = github.getOctokit(process.env?.GITHUB_TOKEN ?? '');
 
 export class GithubIstanbulCoverageProvider extends IstanbulCoverageProvider {
 	name = 'github-istanbul';
@@ -60,12 +65,20 @@ export class GithubIstanbulCoverageProvider extends IstanbulCoverageProvider {
 
 		for (const reporter of this.options.reporter) {
 			if (reporter[0] === 'github') {
-				new GithubIstanbulCoverageReporter(reporter[1]).execute(context);
+				new GithubIstanbulCoverageReporter({
+					github,
+					octokit,
+					...reporter[1],
+				}).execute(context);
 				continue;
 			}
 
 			if (reporter[0] === 'github-summary') {
-				new GithubSummaryIstanbulCoverageReporter(reporter[1]).execute(context);
+				new GithubSummaryIstanbulCoverageReporter({
+					github,
+					octokit,
+					...reporter[1]
+				}).execute(context);
 				continue;
 			}
 

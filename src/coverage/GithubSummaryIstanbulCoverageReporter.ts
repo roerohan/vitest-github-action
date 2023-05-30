@@ -1,55 +1,72 @@
-import {type Context, ReportBase} from 'istanbul-lib-report';
+import { type Context, ReportBase } from "istanbul-lib-report";
+import type { Github, Octokit } from "./GithubIstanbulCoverageProviderModule";
 
 class GithubSummaryIstanbulCoverageReporter extends ReportBase {
-	file: string;
+  file: string;
 
-	first: boolean;
+  first: boolean;
 
-	contentWriter: any;
+  contentWriter: any;
 
-	constructor(options?: {file?: string}) {
-		super();
+  octokit: Octokit;
 
-		this.file = options?.file ?? 'coverage-github-summary.json';
-		this.first = true;
-	}
+  github: Github;
 
-	onStart(root: any, context: Context) {
-		this.contentWriter = context.writer.writeFile(this.file);
-		this.contentWriter.write('{');
-	}
+  constructor(options: { file?: string; github: Github; octokit: Octokit }) {
+    super();
 
-	writeSummary(filePath: string, sc: Record<string, unknown>) {
-		const cw = this.contentWriter;
-		if (this.first) {
-			this.first = false;
-		} else {
-			cw.write(',');
-		}
+    this.file = options?.file ?? "coverage-github-summary.json";
+    this.first = true;
 
-		cw.write(JSON.stringify(filePath));
-		cw.write(': ');
-		cw.write(JSON.stringify(sc));
-		cw.println('');
-	}
+    this.octokit = options.octokit;
+    this.github = options.github;
+  }
 
-	onSummary(node: any) {
-		if (!node.isRoot()) {
-			return;
-		}
+  onStart(root: any, context: Context) {
+    this.contentWriter = context.writer.writeFile(this.file);
+    this.contentWriter.write("{");
+  }
 
-		this.writeSummary('total', node.getCoverageSummary());
-	}
+  writeSummary(filePath: string, sc: Record<string, unknown>) {
+    const cw = this.contentWriter;
+    if (this.first) {
+      this.first = false;
+    } else {
+      cw.write(",");
+    }
 
-	onDetail(node: any) {
-		this.writeSummary(node.getFileCoverage().path, node.getCoverageSummary());
-	}
+    cw.write(JSON.stringify(filePath));
+    cw.write(": ");
+    cw.write(JSON.stringify(sc));
+    cw.println("");
+  }
 
-	onEnd() {
-		const cw = this.contentWriter;
-		cw.println('}');
-		cw.close();
-	}
+  onSummary(node: any) {
+    if (!node.isRoot()) {
+      return;
+    }
+
+    this.writeSummary("total", node.getCoverageSummary());
+  }
+
+  onDetail(node: any) {
+    this.writeSummary(node.getFileCoverage().path, node.getCoverageSummary());
+  }
+
+  async onEnd() {
+    const cw = this.contentWriter;
+    cw.println("}");
+    cw.close();
+
+    if (this.github.context.payload.pull_request?.number) {
+      await this.octokit.rest.issues.createComment({
+        owner: this.github.context.repo.owner,
+        repo: this.github.context.repo.repo,
+        issue_number: this.github.context.payload.pull_request.number,
+        body: "comment from vitest-github-action",
+      });
+    }
+  }
 }
 
 export default GithubSummaryIstanbulCoverageReporter;
