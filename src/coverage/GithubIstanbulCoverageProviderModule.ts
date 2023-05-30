@@ -14,7 +14,7 @@ import libReport from 'istanbul-lib-report';
 import reports from 'istanbul-reports';
 import GithubIstanbulCoverageReporter from './GithubIstanbulCoverageReporter';
 import GithubSummaryIstanbulCoverageReporter from './GithubSummaryIstanbulCoverageReporter';
-import github from "@actions/github";
+import github from '@actions/github';
 
 const GithubIstanbulCoverageProviderModule: CoverageProviderModule = {
 	getProvider(): CoverageProvider {
@@ -77,7 +77,7 @@ export class GithubIstanbulCoverageProvider extends IstanbulCoverageProvider {
 				new GithubSummaryIstanbulCoverageReporter({
 					github,
 					octokit,
-					...reporter[1]
+					...reporter[1],
 				}).execute(context);
 				continue;
 			}
