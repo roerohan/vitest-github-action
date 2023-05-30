@@ -17,6 +17,21 @@ const htmlTableStart = `
   <tbody>
 `;
 
+const htmlFilesTableStart = `
+<h2>Coverage Summary for all files</h2>
+<table>
+  <thead>
+    <tr>
+     <th align="center">File</th>
+     <th align="center">Lines</th>
+     <th align="center">Statements</th>
+     <th align="center">Functions</th>
+     <th align="center">Branches</th>
+    </tr>
+  </thead>
+  <tbody>
+`;
+
 const htmlTableEnd = `
   </tbody>
 </table>
@@ -33,20 +48,34 @@ class GithubSummaryIstanbulCoverageReporter extends ReportBase {
 
 	report: string;
 
+	filesReport: string;
+
 	constructor(options: {github: Github; octokit: Octokit}) {
 		super();
 		this.octokit = options.octokit;
 		this.github = options.github;
 		this.report = '';
+		this.filesReport = '';
 	}
 
 	onStart() {
 		this.report += htmlTableStart;
+		this.filesReport += htmlTableStart;
 	}
 
 	writeSummary(sc: CoverageSummary) {
 		this.report += '<tr>\n';
 		this.report += getStatus(sc.lines);
+		this.report += getAttributeRow(sc.lines);
+		this.report += getAttributeRow(sc.statements);
+		this.report += getAttributeRow(sc.functions);
+		this.report += getAttributeRow(sc.branches);
+		this.report += '</tr>\n';
+	}
+
+	writeFileSummary(filePath: string, sc: CoverageSummary) {
+		this.report += '<tr>\n';
+		this.report += `<td alight="center">${filePath}</td>`;
 		this.report += getAttributeRow(sc.lines);
 		this.report += getAttributeRow(sc.statements);
 		this.report += getAttributeRow(sc.functions);
@@ -62,16 +91,26 @@ class GithubSummaryIstanbulCoverageReporter extends ReportBase {
 		this.writeSummary(node.getCoverageSummary(false));
 	}
 
-	// NOTE(roerohan): Use this method to get file coverage summary
-	// onDetail(node: any) {
-	//   this.writeSummary(node.getFileCoverage().path, node.getCoverageSummary());
-	// }
+	onDetail(node: ReportNode) {
+	  this.writeFileSummary(node.getFileCoverage().path, node.getCoverageSummary(false));
+	}
 
 	async onEnd() {
 		this.report += htmlTableEnd;
+		this.filesReport += htmlTableEnd;
 	
 		const prNumber = this.github.context.payload.pull_request?.number;
+
 		if (prNumber) {
+			// NOTE(roerohan): Report total summary
+			await this.octokit.rest.issues.createComment({
+				owner: this.github.context.repo.owner,
+				repo: this.github.context.repo.repo,
+				issue_number: prNumber,
+				body: this.report,
+			});
+			
+			// NOTE(roerohan): Report filewise summary
 			await this.octokit.rest.issues.createComment({
 				owner: this.github.context.repo.owner,
 				repo: this.github.context.repo.repo,
