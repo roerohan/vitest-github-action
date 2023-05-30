@@ -2,25 +2,15 @@ import {ReportBase, type Context} from 'istanbul-lib-report';
 import type {Github, Octokit} from './GithubIstanbulCoverageProviderModule';
 
 class GithubIstanbulCoverageReporter extends ReportBase {
-	// File: string;
-	//
-	// first: boolean;
-	//
-	// contentWriter: any;
-	//
-	// octokit: Octokit;
-	//
-	// github: Github;
-	//
-	// constructor(options: {file?: string; github: Github; octokit: Octokit}) {
-	// 	super();
-	//
-	// 	this.file = options?.file ?? 'coverage-github.json';
-	// 	this.first = true;
-	//
-	// 	this.octokit = options.octokit;
-	// 	this.github = options.github;
-	// }
+	octokit: Octokit;
+
+	github: Github;
+
+	constructor(options: {file?: string; github: Github; octokit: Octokit}) {
+		super();
+		this.octokit = options.octokit;
+		this.github = options.github;
+	}
 	//
 	// onStart(root: any, context: Context) {
 	// 	this.contentWriter = context.writer.writeFile(this.file);

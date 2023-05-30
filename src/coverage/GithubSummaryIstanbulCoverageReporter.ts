@@ -40,8 +40,6 @@ const htmlTableEnd = `
 type CoverageSummary = ReturnType<ReportNode['getCoverageSummary']>;
 
 class GithubSummaryIstanbulCoverageReporter extends ReportBase {
-	contentWriter: any;
-
 	octokit: Octokit;
 
 	github: Github;
