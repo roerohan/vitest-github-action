@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "test": "vitest",
-    "coverage": "vitest --coverage",
+    "coverage": "vitest run --coverage",
     "lint": "eslint . --ext .ts --ext .js",
     "lint:fix": "npm run lint -- --fix",
     "build": "tsup",
@@ -41,7 +41,13 @@
   "homepage": "https://github.com/roerohan/vitest-github-action#readme",
   "dependencies": {
     "@actions/core": "^1.10.0",
+    "@vitest/coverage-istanbul": "^0.31.1",
     "execa": "^7.1.1",
+    "istanbul-lib-instrument": "^5.2.1",
+    "istanbul-lib-report": "^3.0.0",
+    "istanbul-lib-source-maps": "^4.0.1",
+    "istanbul-reports": "^3.1.5",
+    "test-exclude": "^6.0.0",
     "tsup": "^6.6.3"
   },
   "peerDependencies": {
@@ -55,6 +61,11 @@
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/npm": "^9.0.2",
     "@semantic-release/release-notes-generator": "^10.0.3",
+    "@types/istanbul-lib-instrument": "^1.7.4",
+    "@types/istanbul-lib-report": "^3.0.0",
+    "@types/istanbul-lib-source-maps": "^4.0.1",
+    "@types/istanbul-reports": "^3.0.1",
+    "@types/test-exclude": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "@typescript-eslint/parser": "^5.52.0",
     "commitizen": "^4.3.0",
