@@ -1,11 +1,13 @@
 import {type Context, ReportBase, type ReportNode} from 'istanbul-lib-report';
 import type {Github, Octokit} from './GithubIstanbulCoverageProviderModule';
+import { getAttributeRow, getStatus } from './helper';
 
 const htmlTableStart = `
 <h2>Coverage Summary</h2>
 <table>
   <thead>
     <tr>
+     <th align="center">Status</th>
      <th align="center">Lines</th>
      <th align="center">Statements</th>
      <th align="center">Functions</th>
@@ -23,10 +25,6 @@ const htmlTableEnd = `
 type CoverageSummary = ReturnType<ReportNode['getCoverageSummary']>;
 
 class GithubSummaryIstanbulCoverageReporter extends ReportBase {
-	file: string;
-
-	first: boolean;
-
 	contentWriter: any;
 
 	octokit: Octokit;
@@ -35,12 +33,8 @@ class GithubSummaryIstanbulCoverageReporter extends ReportBase {
 
 	report: string;
 
-	constructor(options: {file?: string; github: Github; octokit: Octokit}) {
+	constructor(options: {github: Github; octokit: Octokit}) {
 		super();
-
-		this.file = options?.file ?? 'coverage-github-summary.json';
-		this.first = true;
-
 		this.octokit = options.octokit;
 		this.github = options.github;
 		this.report = '';
@@ -51,14 +45,8 @@ class GithubSummaryIstanbulCoverageReporter extends ReportBase {
 	}
 
 	writeSummary(sc: CoverageSummary) {
-		const getAttributeRow = (attribute: {
-			pct: number;
-			covered: number;
-			total: number;
-		}) =>
-			`<td>${attribute.pct} (${attribute.covered} / ${attribute.total})</td>\n`;
-
 		this.report += '<tr>\n';
+		this.report += getStatus(sc.lines);
 		this.report += getAttributeRow(sc.lines);
 		this.report += getAttributeRow(sc.statements);
 		this.report += getAttributeRow(sc.functions);
@@ -74,18 +62,20 @@ class GithubSummaryIstanbulCoverageReporter extends ReportBase {
 		this.writeSummary(node.getCoverageSummary(false));
 	}
 
-	// OnDetail(node: any) {
+	// NOTE(roerohan): Use this method to get file coverage summary
+	// onDetail(node: any) {
 	//   this.writeSummary(node.getFileCoverage().path, node.getCoverageSummary());
 	// }
 
 	async onEnd() {
 		this.report += htmlTableEnd;
-
-		if (this.github.context.payload.pull_request?.number) {
+	
+		const prNumber = this.github.context.payload.pull_request?.number;
+		if (prNumber) {
 			await this.octokit.rest.issues.createComment({
 				owner: this.github.context.repo.owner,
 				repo: this.github.context.repo.repo,
-				issue_number: this.github.context.payload.pull_request.number,
+				issue_number: prNumber,
 				body: this.report,
 			});
 		}
