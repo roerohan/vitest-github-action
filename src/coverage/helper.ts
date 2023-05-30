@@ -13,9 +13,9 @@ type Attribute = {
 export const getStatus = (attribute: Attribute) => {
 	let status = statuses.red;
 
-	if (attribute.pct > 50 && attribute.pct < 80) {
+	if (attribute.pct >= 50 && attribute.pct < 80) {
 		status = statuses.blue;
-	} else if (attribute.pct > 80) {
+	} else if (attribute.pct >= 80) {
 		status = statuses.green;
 	}
 
