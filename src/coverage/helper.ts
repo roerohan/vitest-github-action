@@ -19,8 +19,8 @@ export const getStatus = (attribute: Attribute) => {
 		status = statuses.green;
 	}
 
-	return `<td>${status}</td>`;
+	return `<td align="center">${status}</td>`;
 };
 
 export const getAttributeRow = (attribute: Attribute) =>
-	`<td>${attribute.pct} (${attribute.covered} / ${attribute.total})</td>\n`;
+	`<td align="center">${attribute.pct} (${attribute.covered} / ${attribute.total})</td>\n`;
