@@ -4,3 +4,5 @@ dist/*
 !dist/action.js
 build/
 types/
+coverage/
+!src/coverage
