@@ -92,7 +92,10 @@ class GithubSummaryIstanbulCoverageReporter extends ReportBase {
 	}
 
 	onDetail(node: ReportNode) {
-	  this.writeFileSummary(node.getFileCoverage().path, node.getCoverageSummary(false));
+		this.writeFileSummary(
+			node.getFileCoverage().path,
+			node.getCoverageSummary(false),
+		);
 	}
 
 	async onEnd() {
@@ -106,6 +109,7 @@ class GithubSummaryIstanbulCoverageReporter extends ReportBase {
 			await this.octokit.rest.issues.createComment({
 				owner: this.github.context.repo.owner,
 				repo: this.github.context.repo.repo,
+				// eslint-disable-next-line @typescript-eslint/naming-convention
 				issue_number: prNumber,
 				body: this.report,
 			});
@@ -114,6 +118,7 @@ class GithubSummaryIstanbulCoverageReporter extends ReportBase {
 			await this.octokit.rest.issues.createComment({
 				owner: this.github.context.repo.owner,
 				repo: this.github.context.repo.repo,
+				// eslint-disable-next-line @typescript-eslint/naming-convention
 				issue_number: prNumber,
 				body: this.filesReport,
 			});

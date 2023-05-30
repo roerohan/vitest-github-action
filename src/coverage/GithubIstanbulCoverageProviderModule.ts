@@ -15,7 +15,7 @@ import GithubIstanbulCoverageReporter from './GithubIstanbulCoverageReporter';
 import GithubSummaryIstanbulCoverageReporter from './GithubSummaryIstanbulCoverageReporter';
 import github from '@actions/github';
 
-const GithubIstanbulCoverageProviderModule: CoverageProviderModule = {
+const githubIstanbulCoverageProviderModule: CoverageProviderModule = {
 	getProvider(): CoverageProvider {
 		return new GithubIstanbulCoverageProvider();
 	},
@@ -33,6 +33,8 @@ export class GithubIstanbulCoverageProvider extends IstanbulCoverageProvider {
 	name = 'github-istanbul';
 
 	declare options: Options;
+
+	declare coverages: libCoverage.CoverageMap[];
 
 	async reportCoverage({allTestsRun}: ReportContext = {}) {
 		const mergedCoverage: CoverageMap = this.coverages.reduce(
@@ -63,7 +65,7 @@ export class GithubIstanbulCoverageProvider extends IstanbulCoverageProvider {
 		});
 
 		for (const reporter of this.options.reporter) {
-			if (reporter[0] as string === 'github') {
+			if ((reporter[0] as string) === 'github') {
 				new GithubIstanbulCoverageReporter({
 					github,
 					octokit,
@@ -72,7 +74,7 @@ export class GithubIstanbulCoverageProvider extends IstanbulCoverageProvider {
 				continue;
 			}
 
-			if (reporter[0] as string === 'github-summary') {
+			if ((reporter[0] as string) === 'github-summary') {
 				new GithubSummaryIstanbulCoverageReporter({
 					github,
 					octokit,
@@ -92,9 +94,9 @@ export class GithubIstanbulCoverageProvider extends IstanbulCoverageProvider {
 
 		if (
 			this.options.branches
-      || this.options.functions
-      || this.options.lines
-      || this.options.statements
+			?? this.options.functions
+			?? this.options.lines
+			?? this.options.statements
 		) {
 			this.checkThresholds(coverageMap, {
 				branches: this.options.branches,
@@ -123,11 +125,11 @@ export class GithubIstanbulCoverageProvider extends IstanbulCoverageProvider {
 function isEmptyCoverageRange(range: libCoverage.Range) {
 	return (
 		range.start === undefined
-    || range.start.line === undefined
-    || range.start.column === undefined
-    || range.end === undefined
-    || range.end.line === undefined
-    || range.end.column === undefined
+		|| range.start.line === undefined
+		|| range.start.column === undefined
+		|| range.end === undefined
+		|| range.end.line === undefined
+		|| range.end.column === undefined
 	);
 }
 
@@ -136,22 +138,24 @@ function includeImplicitElseBranches(coverageMap: CoverageMap) {
 		const fileCoverage = coverageMap.fileCoverageFor(file);
 
 		for (const branchMap of Object.values(fileCoverage.branchMap)) {
-			if (branchMap.type === 'if') {
-				const lastIndex = branchMap.locations.length - 1;
+			if (branchMap.type !== 'if') {
+				continue;
+			}
 
-				if (lastIndex > 0) {
-					const elseLocation = branchMap.locations[lastIndex];
+			const lastIndex = branchMap.locations.length - 1;
 
-					if (elseLocation && isEmptyCoverageRange(elseLocation)) {
-						const ifLocation = branchMap.locations[0];
+			if (lastIndex > 0) {
+				const elseLocation = branchMap.locations[lastIndex];
 
-						elseLocation.start = {...ifLocation.start};
-						elseLocation.end = {...ifLocation.end};
-					}
+				if (elseLocation && isEmptyCoverageRange(elseLocation)) {
+					const ifLocation = branchMap.locations[0];
+
+					elseLocation.start = {...ifLocation.start};
+					elseLocation.end = {...ifLocation.end};
 				}
 			}
 		}
 	}
 }
 
-export default GithubIstanbulCoverageProviderModule;
+export default githubIstanbulCoverageProviderModule;

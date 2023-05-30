@@ -7,7 +7,7 @@ export default defineConfig({
 		coverage: {
 			provider: 'custom',
 			customProviderModule: 'src/coverage/GithubIstanbulCoverageProviderModule',
-			// @ts-expect-error
+			// @ts-expect-error github and github-summary are not default reporters
 			reporter: ['github', 'github-summary'],
 			lines: 80,
 		},
