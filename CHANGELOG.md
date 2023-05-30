@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/roerohan/vitest-github-action/compare/v1.3.1...v1.3.2) (2023-05-30)
+
+
+### Bug Fixes
+
+* remove main key ([34308db](https://github.com/roerohan/vitest-github-action/commit/34308db0f7230bf9fdd15f576e5545868d9597cf))
+
 ## [1.3.1](https://github.com/roerohan/vitest-github-action/compare/v1.3.0...v1.3.1) (2023-05-30)
 
 
