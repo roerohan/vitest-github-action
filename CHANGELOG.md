@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/roerohan/vitest-github-action/compare/v1.2.3...v1.3.0) (2023-05-30)
+
+
+### Features
+
+* use entire istanbul coverage file ([#13](https://github.com/roerohan/vitest-github-action/issues/13)) ([8a9d7c8](https://github.com/roerohan/vitest-github-action/commit/8a9d7c8af6b0752ce7a1562c3b46958c76518c51))
+
 ## [1.2.3](https://github.com/roerohan/vitest-github-action/compare/v1.2.2...v1.2.3) (2023-05-30)
 
 
