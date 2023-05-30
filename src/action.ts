@@ -4,7 +4,7 @@ import GithubReporter from './GithubReporter';
 
 async function main(): Promise<void> {
 	const configFile: string = getInput('config');
-	// Const coverage = Boolean(getInput('coverage'));
+	const coverage = Boolean(getInput('coverage'));
 
 	const vitest = await startVitest('test', [], {
 		watch: false,
@@ -12,6 +12,9 @@ async function main(): Promise<void> {
 	}, {
 		test: {
 			reporters: [new GithubReporter(), 'default'],
+			coverage: {
+				enabled: coverage,
+			},
 		},
 	});
 

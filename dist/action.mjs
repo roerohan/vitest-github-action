@@ -112,12 +112,16 @@ ${error.stack}` : "Vitest Error",
 // src/action.ts
 async function main() {
   const configFile = getInput("config");
+  const coverage = Boolean(getInput("coverage"));
   const vitest = await startVitest("test", [], {
     watch: false,
     config: configFile
   }, {
     test: {
-      reporters: [new GithubReporter(), "default"]
+      reporters: [new GithubReporter(), "default"],
+      coverage: {
+        enabled: coverage
+      }
     }
   });
   await vitest?.close();
