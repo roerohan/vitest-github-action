@@ -1,5 +1,26 @@
-import {type Context, ReportBase} from 'istanbul-lib-report';
+import {type Context, ReportBase, type ReportNode} from 'istanbul-lib-report';
 import type {Github, Octokit} from './GithubIstanbulCoverageProviderModule';
+
+const htmlTableStart = `
+<h2>Coverage Summary</h2>
+<table>
+  <thead>
+    <tr>
+     <th align="center">Lines</th>
+     <th align="center">Statements</th>
+     <th align="center">Functions</th>
+     <th align="center">Branches</th>
+    </tr>
+  </thead>
+  <tbody>
+`;
+
+const htmlTableEnd = `
+  </tbody>
+</table>
+`;
+
+type CoverageSummary = ReturnType<ReportNode['getCoverageSummary']>;
 
 class GithubSummaryIstanbulCoverageReporter extends ReportBase {
 	file: string;
@@ -12,6 +33,8 @@ class GithubSummaryIstanbulCoverageReporter extends ReportBase {
 
 	github: Github;
 
+	report: string;
+
 	constructor(options: {file?: string; github: Github; octokit: Octokit}) {
 		super();
 
@@ -20,50 +43,50 @@ class GithubSummaryIstanbulCoverageReporter extends ReportBase {
 
 		this.octokit = options.octokit;
 		this.github = options.github;
+		this.report = '';
 	}
 
-	onStart(root: any, context: Context) {
-		this.contentWriter = context.writer.writeFile(this.file);
-		this.contentWriter.write('{');
+	onStart() {
+		this.report += htmlTableStart;
 	}
 
-	writeSummary(filePath: string, sc: Record<string, unknown>) {
-		const cw = this.contentWriter;
-		if (this.first) {
-			this.first = false;
-		} else {
-			cw.write(',');
-		}
+	writeSummary(sc: CoverageSummary) {
+		const getAttributeRow = (attribute: {
+			pct: number;
+			covered: number;
+			total: number;
+		}) =>
+			`<td>${attribute.pct} (${attribute.covered} / ${attribute.total})</td>\n`;
 
-		cw.write(JSON.stringify(filePath));
-		cw.write(': ');
-		cw.write(JSON.stringify(sc));
-		cw.println('');
+		this.report += '<tr>\n';
+		this.report += getAttributeRow(sc.lines);
+		this.report += getAttributeRow(sc.statements);
+		this.report += getAttributeRow(sc.functions);
+		this.report += getAttributeRow(sc.branches);
+		this.report += '</tr>\n';
 	}
 
-	onSummary(node: any) {
+	onSummary(node: ReportNode) {
 		if (!node.isRoot()) {
 			return;
 		}
 
-		this.writeSummary('total', node.getCoverageSummary());
+		this.writeSummary(node.getCoverageSummary(false));
 	}
 
-	onDetail(node: any) {
-		this.writeSummary(node.getFileCoverage().path, node.getCoverageSummary());
-	}
+	// OnDetail(node: any) {
+	//   this.writeSummary(node.getFileCoverage().path, node.getCoverageSummary());
+	// }
 
 	async onEnd() {
-		const cw = this.contentWriter;
-		cw.println('}');
-		cw.close();
+		this.report += htmlTableEnd;
 
 		if (this.github.context.payload.pull_request?.number) {
 			await this.octokit.rest.issues.createComment({
 				owner: this.github.context.repo.owner,
 				repo: this.github.context.repo.repo,
 				issue_number: this.github.context.payload.pull_request.number,
-				body: 'comment from vitest-github-action',
+				body: this.report,
 			});
 		}
 	}
