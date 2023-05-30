@@ -74,13 +74,13 @@ class GithubSummaryIstanbulCoverageReporter extends ReportBase {
 	}
 
 	writeFileSummary(filePath: string, sc: CoverageSummary) {
-		this.report += '<tr>\n';
-		this.report += `<td alight="center">${filePath}</td>`;
-		this.report += getAttributeRow(sc.lines);
-		this.report += getAttributeRow(sc.statements);
-		this.report += getAttributeRow(sc.functions);
-		this.report += getAttributeRow(sc.branches);
-		this.report += '</tr>\n';
+		this.filesReport += '<tr>\n';
+		this.filesReport += `<td alight="center">${filePath}</td>`;
+		this.filesReport += getAttributeRow(sc.lines);
+		this.filesReport += getAttributeRow(sc.statements);
+		this.filesReport += getAttributeRow(sc.functions);
+		this.filesReport += getAttributeRow(sc.branches);
+		this.filesReport += '</tr>\n';
 	}
 
 	onSummary(node: ReportNode) {
@@ -115,7 +115,7 @@ class GithubSummaryIstanbulCoverageReporter extends ReportBase {
 				owner: this.github.context.repo.owner,
 				repo: this.github.context.repo.repo,
 				issue_number: prNumber,
-				body: this.report,
+				body: this.filesReport,
 			});
 		}
 	}
