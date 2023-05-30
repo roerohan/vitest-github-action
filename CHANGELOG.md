@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/roerohan/vitest-github-action/compare/v1.1.2...v1.2.0) (2023-05-30)
+
+
+### Features
+
+* added coverage module ([#12](https://github.com/roerohan/vitest-github-action/issues/12)) ([aeeeaba](https://github.com/roerohan/vitest-github-action/commit/aeeeabaae5a2bb5e0348de5805649b013ed90f0b))
+
 ## [1.1.2](https://github.com/roerohan/vitest-github-action/compare/v1.1.1...v1.1.2) (2023-05-17)
 
 
