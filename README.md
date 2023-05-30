@@ -49,7 +49,6 @@ GitHub actions error and coverage reporter for vitest.
 - [vitest](https://vitest.dev/)
 - [@actions/core](https://www.npmjs.com/package/@actions/core)
 - [@actions/github](https://www.npmjs.com/package/@actions/github)
-- [@actions/github](https://www.npmjs.com/package/@actions/github)
 - [istanbuljs](https://istanbul.js.org/)
 
 <!-- GETTING STARTED -->
