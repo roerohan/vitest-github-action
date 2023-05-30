@@ -1,5 +1,4 @@
 import type {
-	BaseCoverageOptions,
 	CoverageProviderModule,
 	ReportContext,
 	ResolvedCoverageOptions,
@@ -64,7 +63,7 @@ export class GithubIstanbulCoverageProvider extends IstanbulCoverageProvider {
 		});
 
 		for (const reporter of this.options.reporter) {
-			if (reporter[0] === 'github') {
+			if (reporter[0] as string === 'github') {
 				new GithubIstanbulCoverageReporter({
 					github,
 					octokit,
@@ -73,7 +72,7 @@ export class GithubIstanbulCoverageProvider extends IstanbulCoverageProvider {
 				continue;
 			}
 
-			if (reporter[0] === 'github-summary') {
+			if (reporter[0] as string === 'github-summary') {
 				new GithubSummaryIstanbulCoverageReporter({
 					github,
 					octokit,
