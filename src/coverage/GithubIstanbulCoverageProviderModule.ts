@@ -1,3 +1,8 @@
+/**
+ * This code has been referenced from the following link:
+ * https://github.com/vitest-dev/vitest/blob/main/packages/coverage-istanbul/src/provider.ts
+ */
+
 import type {
 	CoverageProviderModule,
 	ReportContext,
@@ -26,6 +31,19 @@ import {BaseCoverageProvider} from 'vitest/coverage';
 import {type Instrumenter, createInstrumenter} from 'istanbul-lib-instrument';
 import _TestExclude from 'test-exclude';
 import github from '@actions/github';
+
+type TestExclude = new (opts: {
+	cwd?: string | string[];
+	include?: string | string[];
+	exclude?: string | string[];
+	extension?: string | string[];
+	excludeNodeModules?: boolean;
+}) => {
+	shouldInstrument(filePath: string): boolean;
+	glob(cwd: string): Promise<string[]>;
+};
+
+type Threshold = 'lines' | 'functions' | 'statements' | 'branches';
 
 const githubIstanbulCoverageProviderModule: CoverageProviderModule = {
 	getProvider(): CoverageProvider {
@@ -73,10 +91,10 @@ export class GithubIstanbulCoverageProvider
 			provider: 'istanbul',
 			reportsDirectory: resolve(
 				ctx.config.root,
-				config.reportsDirectory || coverageConfigDefaults.reportsDirectory,
+				config.reportsDirectory ?? coverageConfigDefaults.reportsDirectory,
 			),
 			reporter: this.resolveReporters(
-				config.reporter || coverageConfigDefaults.reporter,
+				config.reporter ?? coverageConfigDefaults.reporter,
 			),
 		};
 
@@ -108,26 +126,31 @@ export class GithubIstanbulCoverageProvider
 		return this.options;
 	}
 
-	onFileTransform(sourceCode: string, id: string, pluginCtx: any) {
+	onFileTransform(
+		sourceCode: string,
+		id: string,
+		pluginCtx: {getCombinedSourcemap: () => Instrumenter['sourceMap']},
+	) {
 		if (!this.testExclude.shouldInstrument(id)) {
 			return;
 		}
 
 		const sourceMap = pluginCtx.getCombinedSourcemap();
+		if (!sourceMap) {
+			return;
+		}
+
 		sourceMap.sources = sourceMap.sources.map(removeQueryParameters);
 
-		const code = this.instrumenter.instrumentSync(
-			sourceCode,
-			id,
-			sourceMap,
-		);
-		const map = this.instrumenter.lastSourceMap() as any;
+		const code = this.instrumenter.instrumentSync(sourceCode, id, sourceMap);
+		/* eslint-disable */
+		const map: any = this.instrumenter.lastSourceMap();
 
-		return {code, map};
+		return { code, map };
 	}
 
-	onAfterSuiteRun({coverage}: AfterSuiteRunMeta) {
-		this.coverages.push(coverage);
+	onAfterSuiteRun({ coverage }: AfterSuiteRunMeta) {
+		this.coverages.push(coverage as CoverageMap);
 	}
 
 	async clean(clean = true) {
@@ -142,14 +165,14 @@ export class GithubIstanbulCoverageProvider
 		this.coverages = [];
 	}
 
-	async reportCoverage({allTestsRun}: ReportContext = {}) {
+	async reportCoverage({ allTestsRun }: ReportContext = {}) {
 		const mergedCoverage: CoverageMap = this.coverages.reduce(
 			(coverage, previousCoverageMap) => {
 				const map = libCoverage.createCoverageMap(coverage);
 				map.merge(previousCoverageMap);
 				return map;
 			},
-			libCoverage.createCoverageMap({}),
+			libCoverage.createCoverageMap({})
 		);
 
 		if (this.options.all && allTestsRun) {
@@ -160,7 +183,7 @@ export class GithubIstanbulCoverageProvider
 
 		const sourceMapStore = libSourceMaps.createSourceMapStore();
 		const coverageMap: CoverageMap = await sourceMapStore.transformCoverage(
-			mergedCoverage,
+			mergedCoverage
 		);
 
 		const context = libReport.createContext({
@@ -171,7 +194,7 @@ export class GithubIstanbulCoverageProvider
 		});
 
 		for (const reporter of this.options.reporter) {
-			if ((reporter[0] as string) === 'github') {
+			if ((reporter[0] as string) === "github") {
 				new GithubIstanbulCoverageReporter({
 					github,
 					octokit,
@@ -180,7 +203,7 @@ export class GithubIstanbulCoverageProvider
 				continue;
 			}
 
-			if ((reporter[0] as string) === 'github-summary') {
+			if ((reporter[0] as string) === "github-summary") {
 				new GithubSummaryIstanbulCoverageReporter({
 					github,
 					octokit,
@@ -199,10 +222,10 @@ export class GithubIstanbulCoverageProvider
 		}
 
 		if (
-			this.options.branches
-			?? this.options.functions
-			?? this.options.lines
-			?? this.options.statements
+			this.options.branches ??
+			this.options.functions ??
+			this.options.lines ??
+			this.options.statements
 		) {
 			this.checkThresholds(coverageMap, {
 				branches: this.options.branches,
@@ -229,7 +252,7 @@ export class GithubIstanbulCoverageProvider
 
 	checkThresholds(
 		coverageMap: CoverageMap,
-		thresholds: Record<Threshold, number | undefined>,
+		thresholds: Record<Threshold, number | undefined>
 	) {
 		// Construct list of coverage summaries where thresholds are compared against
 		const summaries = this.options.perFile
@@ -245,43 +268,42 @@ export class GithubIstanbulCoverageProvider
 			];
 
 		// Check thresholds of each summary
-		for (const {summary, file} of summaries) {
+		for (const { summary, file } of summaries) {
 			for (const thresholdKey of [
-				'lines',
-				'functions',
-				'statements',
-				'branches',
+				"lines",
+				"functions",
+				"statements",
+				"branches",
 			] as const) {
 				const threshold = thresholds[thresholdKey];
 
-				if (threshold !== undefined) {
-					const coverage = summary.data[thresholdKey].pct;
+				if (!threshold) {
+					continue;
+				}
 
-					if (coverage < threshold) {
-						process.exitCode = 1;
+				const coverage = summary.data[thresholdKey].pct;
 
-						/*
-						 * Generate error message based on perFile flag:
-						 * - ERROR: Coverage for statements (33.33%) does not meet threshold (85%) for src/math.ts
-						 * - ERROR: Coverage for statements (50%) does not meet global threshold (85%)
-						 */
-						let errorMessage = `ERROR: Coverage for ${thresholdKey} (${coverage}%) does not meet`;
+				if (coverage < threshold) {
+					process.exitCode = 1;
 
-						if (!this.options.perFile) {
-							errorMessage += ' global';
-						}
+					/*
+					 * Generate error message based on perFile flag:
+					 * - ERROR: Coverage for statements (33.33%) does not meet threshold (85%) for src/math.ts
+					 * - ERROR: Coverage for statements (50%) does not meet global threshold (85%)
+					 */
+					let errorMessage = `ERROR: Coverage for ${thresholdKey} (${coverage}%) does not meet`;
 
-						errorMessage += ` threshold (${threshold}%)`;
-
-						if (this.options.perFile && file) {
-							errorMessage += ` for ${relative('./', file).replace(
-								/\\/g,
-								'/',
-							)}`;
-						}
-
-						console.error(errorMessage);
+					if (!this.options.perFile) {
+						errorMessage += " global";
 					}
+
+					errorMessage += ` threshold (${threshold}%)`;
+
+					if (this.options.perFile && file) {
+						errorMessage += ` for ${relative("./", file).replace(/\\/g, "/")}`;
+					}
+
+					console.error(errorMessage);
 				}
 			}
 		}
@@ -292,27 +314,25 @@ export class GithubIstanbulCoverageProvider
 		// are not already in the coverage map
 		const includedFiles = await this.testExclude.glob(this.ctx.config.root);
 		const uncoveredFiles = includedFiles
-			.map(file => resolve(this.ctx.config.root, file))
-			.filter(file => !coverageMap.data[file]);
+			.map((file) => resolve(this.ctx.config.root, file))
+			.filter((file) => !coverageMap.data[file]);
 
 		const transformResults = await Promise.all(
-			uncoveredFiles.map(async filename => {
+			uncoveredFiles.map(async (filename) => {
 				const transformResult = await this.ctx.vitenode.transformRequest(
-					filename,
+					filename
 				);
-				return {transformResult, filename};
-			}),
+				return { transformResult, filename };
+			})
 		);
 
-		for (const {transformResult, filename} of transformResults) {
-			const sourceMap = transformResult?.map;
+		for (const { transformResult, filename } of transformResults) {
+			const sourceMap =
+				transformResult?.map as unknown as Instrumenter["sourceMap"];
+			const code = transformResult?.code;
 
-			if (sourceMap) {
-				this.instrumenter.instrumentSync(
-					transformResult.code,
-					filename,
-					sourceMap,
-				);
+			if (sourceMap && code) {
+				this.instrumenter.instrumentSync(code, filename, sourceMap);
 
 				const lastCoverage = this.instrumenter.lastFileCoverage();
 				if (lastCoverage) {
@@ -329,17 +349,17 @@ export class GithubIstanbulCoverageProvider
  * - To `/src/components/Header.component.ts`
  */
 function removeQueryParameters(filename: string) {
-	return filename.split('?')[0];
+	return filename.split("?")[0];
 }
 
 function isEmptyCoverageRange(range: libCoverage.Range) {
 	return (
-		range.start === undefined
-		|| range.start.line === undefined
-		|| range.start.column === undefined
-		|| range.end === undefined
-		|| range.end.line === undefined
-		|| range.end.column === undefined
+		range.start === undefined ||
+		range.start.line === undefined ||
+		range.start.column === undefined ||
+		range.end === undefined ||
+		range.end.line === undefined ||
+		range.end.column === undefined
 	);
 }
 
@@ -348,7 +368,7 @@ function includeImplicitElseBranches(coverageMap: CoverageMap) {
 		const fileCoverage = coverageMap.fileCoverageFor(file);
 
 		for (const branchMap of Object.values(fileCoverage.branchMap)) {
-			if (branchMap.type !== 'if') {
+			if (branchMap.type !== "if") {
 				continue;
 			}
 
@@ -360,8 +380,8 @@ function includeImplicitElseBranches(coverageMap: CoverageMap) {
 				if (elseLocation && isEmptyCoverageRange(elseLocation)) {
 					const ifLocation = branchMap.locations[0];
 
-					elseLocation.start = {...ifLocation.start};
-					elseLocation.end = {...ifLocation.end};
+					elseLocation.start = { ...ifLocation.start };
+					elseLocation.end = { ...ifLocation.end };
 				}
 			}
 		}
