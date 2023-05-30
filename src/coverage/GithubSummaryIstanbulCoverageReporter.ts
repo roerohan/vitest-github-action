@@ -1,6 +1,6 @@
 import {type Context, ReportBase, type ReportNode} from 'istanbul-lib-report';
 import type {Github, Octokit} from './GithubIstanbulCoverageProviderModule';
-import { getAttributeRow, getStatus } from './helper';
+import {getAttributeRow, getStatus} from './helper';
 
 const htmlTableStart = `
 <h2>Coverage Summary</h2>
@@ -60,7 +60,7 @@ class GithubSummaryIstanbulCoverageReporter extends ReportBase {
 
 	onStart() {
 		this.report += htmlTableStart;
-		this.filesReport += htmlTableStart;
+		this.filesReport += htmlFilesTableStart;
 	}
 
 	writeSummary(sc: CoverageSummary) {
@@ -98,7 +98,7 @@ class GithubSummaryIstanbulCoverageReporter extends ReportBase {
 	async onEnd() {
 		this.report += htmlTableEnd;
 		this.filesReport += htmlTableEnd;
-	
+
 		const prNumber = this.github.context.payload.pull_request?.number;
 
 		if (prNumber) {
@@ -109,7 +109,7 @@ class GithubSummaryIstanbulCoverageReporter extends ReportBase {
 				issue_number: prNumber,
 				body: this.report,
 			});
-			
+
 			// NOTE(roerohan): Report filewise summary
 			await this.octokit.rest.issues.createComment({
 				owner: this.github.context.repo.owner,

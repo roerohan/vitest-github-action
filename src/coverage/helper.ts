@@ -1,7 +1,7 @@
 const statuses = {
-	red: "🔴",
-	green: "🟢",
-	blue: "🔵",
+	red: '🔴',
+	green: '🟢',
+	blue: '🔵',
 };
 
 type Attribute = {
