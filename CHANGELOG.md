@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/roerohan/vitest-github-action/compare/v1.2.2...v1.2.3) (2023-05-30)
+
+
+### Bug Fixes
+
+* update readme and action ([319f065](https://github.com/roerohan/vitest-github-action/commit/319f0659be29dcefc6fa9a9dcf992b420407a8a8))
+
 ## [1.2.2](https://github.com/roerohan/vitest-github-action/compare/v1.2.1...v1.2.2) (2023-05-30)
 
 
