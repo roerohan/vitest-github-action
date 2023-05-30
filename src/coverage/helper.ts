@@ -23,4 +23,4 @@ export const getStatus = (attribute: Attribute) => {
 };
 
 export const getAttributeRow = (attribute: Attribute) =>
-	`<td align="center">${attribute.pct} (${attribute.covered} / ${attribute.total})</td>\n`;
+	`<td align="center">${attribute.pct}% (${attribute.covered} / ${attribute.total})</td>\n`;
