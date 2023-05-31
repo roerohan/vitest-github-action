@@ -1,3 +1,10 @@
+## [1.3.4](https://github.com/roerohan/vitest-github-action/compare/v1.3.3...v1.3.4) (2023-05-31)
+
+
+### Bug Fixes
+
+* update to use esm only ([4b1198b](https://github.com/roerohan/vitest-github-action/commit/4b1198b940dade4d8463b01910452e5f22acd4c6))
+
 ## [1.3.3](https://github.com/roerohan/vitest-github-action/compare/v1.3.2...v1.3.3) (2023-05-31)
 
 
