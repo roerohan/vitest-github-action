@@ -1,7 +1,7 @@
-import {ReportBase, type Context} from 'istanbul-lib-report';
+import libReport from 'istanbul-lib-report';
 import type {Github, Octokit} from './GithubIstanbulCoverageProviderModule';
 
-class GithubIstanbulCoverageReporter extends ReportBase {
+class GithubIstanbulCoverageReporter extends libReport.ReportBase {
 	octokit: Octokit;
 
 	github: Github;

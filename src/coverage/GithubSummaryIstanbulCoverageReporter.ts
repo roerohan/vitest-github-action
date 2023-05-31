@@ -1,4 +1,4 @@
-import {type Context, ReportBase, type ReportNode} from 'istanbul-lib-report';
+import libReport from 'istanbul-lib-report';
 import type {Github, Octokit} from './GithubIstanbulCoverageProviderModule';
 import {getAttributeRow, getStatus} from './helper';
 
@@ -37,9 +37,9 @@ const htmlTableEnd = `
 </table>
 `;
 
-type CoverageSummary = ReturnType<ReportNode['getCoverageSummary']>;
+type CoverageSummary = ReturnType<libReport.ReportNode['getCoverageSummary']>;
 
-class GithubSummaryIstanbulCoverageReporter extends ReportBase {
+class GithubSummaryIstanbulCoverageReporter extends libReport.ReportBase {
 	octokit: Octokit;
 
 	github: Github;
@@ -81,7 +81,7 @@ class GithubSummaryIstanbulCoverageReporter extends ReportBase {
 		this.filesReport += '</tr>\n';
 	}
 
-	onSummary(node: ReportNode) {
+	onSummary(node: libReport.ReportNode) {
 		if (!node.isRoot()) {
 			return;
 		}
@@ -89,7 +89,7 @@ class GithubSummaryIstanbulCoverageReporter extends ReportBase {
 		this.writeSummary(node.getCoverageSummary(false));
 	}
 
-	onDetail(node: ReportNode) {
+	onDetail(node: libReport.ReportNode) {
 		this.writeFileSummary(
 			node.getFileCoverage().path,
 			node.getCoverageSummary(false),
