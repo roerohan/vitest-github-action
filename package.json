@@ -4,11 +4,13 @@
   "description": "GitHub actions error and coverage reporter for vitest.",
   "types": "dist/index.d.ts",
   "module": "./dist/index.mjs",
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
       "types": "./dist/index.d.ts"
-    }
+    },
+    "./*": "./*"
   },
   "files": [
     "README.md",
