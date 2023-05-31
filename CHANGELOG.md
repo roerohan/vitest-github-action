@@ -1,3 +1,10 @@
+## [1.3.6](https://github.com/roerohan/vitest-github-action/compare/v1.3.5...v1.3.6) (2023-05-31)
+
+
+### Bug Fixes
+
+* remove default export ([f6af523](https://github.com/roerohan/vitest-github-action/commit/f6af52363103a74bfa56c8924456b35799fa8712))
+
 ## [1.3.5](https://github.com/roerohan/vitest-github-action/compare/v1.3.4...v1.3.5) (2023-05-31)
 
 
