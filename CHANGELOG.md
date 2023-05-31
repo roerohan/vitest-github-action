@@ -1,3 +1,10 @@
+## [1.3.7](https://github.com/roerohan/vitest-github-action/compare/v1.3.6...v1.3.7) (2023-05-31)
+
+
+### Bug Fixes
+
+* import commonjs export ([d3c17f9](https://github.com/roerohan/vitest-github-action/commit/d3c17f99aedb23f030ee0fa1d7c44b129ee93bc2))
+
 ## [1.3.6](https://github.com/roerohan/vitest-github-action/compare/v1.3.5...v1.3.6) (2023-05-31)
 
 
