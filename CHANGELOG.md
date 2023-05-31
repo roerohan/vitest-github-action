@@ -1,3 +1,11 @@
+## [1.3.3](https://github.com/roerohan/vitest-github-action/compare/v1.3.2...v1.3.3) (2023-05-31)
+
+
+### Bug Fixes
+
+* added module key ([84b08b3](https://github.com/roerohan/vitest-github-action/commit/84b08b34aed883cb7d29dceab922ec0bfb317e72))
+* use type module ([5974af5](https://github.com/roerohan/vitest-github-action/commit/5974af51216efc097687b89469b4f2e5d5fe2d96))
+
 ## [1.3.2](https://github.com/roerohan/vitest-github-action/compare/v1.3.1...v1.3.2) (2023-05-30)
 
 
