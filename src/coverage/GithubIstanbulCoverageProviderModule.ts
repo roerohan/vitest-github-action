@@ -57,7 +57,6 @@ type Options = ResolvedCoverageOptions<'istanbul'>;
 
 export type Octokit = ReturnType<typeof github.getOctokit>;
 export type Github = typeof github;
-const octokit: Octokit = github.getOctokit(process.env?.GITHUB_TOKEN ?? '');
 
 export class GithubIstanbulCoverageProvider
 	extends BaseCoverageProvider
@@ -194,22 +193,25 @@ export class GithubIstanbulCoverageProvider
 		});
 
 		for (const reporter of this.options.reporter) {
-			if ((reporter[0] as string) === "github") {
-				new GithubIstanbulCoverageReporter({
-					github,
-					octokit,
-					...reporter[1],
-				}).execute(context);
-				continue;
-			}
+			if (['github', 'github-summary'].includes(reporter[0])) {
+				const octokit: Octokit = github.getOctokit(process.env?.GITHUB_TOKEN ?? '');
+				if ((reporter[0] as string) === "github") {
+					new GithubIstanbulCoverageReporter({
+						github,
+						octokit,
+						...reporter[1],
+					}).execute(context);
+					continue;
+				}
 
-			if ((reporter[0] as string) === "github-summary") {
-				new GithubSummaryIstanbulCoverageReporter({
-					github,
-					octokit,
-					...reporter[1],
-				}).execute(context);
-				continue;
+				if ((reporter[0] as string) === "github-summary") {
+					new GithubSummaryIstanbulCoverageReporter({
+						github,
+						octokit,
+						...reporter[1],
+					}).execute(context);
+					continue;
+				}
 			}
 
 			reports
