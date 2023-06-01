@@ -195,7 +195,7 @@ export class GithubIstanbulCoverageProvider
 		for (const reporter of this.options.reporter) {
 			if (['github', 'github-summary'].includes(reporter[0])) {
 				const octokit: Octokit = github.getOctokit(process.env?.GITHUB_TOKEN ?? '');
-				if ((reporter[0] as string) === "github") {
+				if ((reporter[0] as string) === 'github') {
 					new GithubIstanbulCoverageReporter({
 						github,
 						octokit,
@@ -272,10 +272,10 @@ export class GithubIstanbulCoverageProvider
 		// Check thresholds of each summary
 		for (const { summary, file } of summaries) {
 			for (const thresholdKey of [
-				"lines",
-				"functions",
-				"statements",
-				"branches",
+				'lines',
+				'functions',
+				'statements',
+				'branches',
 			] as const) {
 				const threshold = thresholds[thresholdKey];
 
@@ -296,13 +296,13 @@ export class GithubIstanbulCoverageProvider
 					let errorMessage = `ERROR: Coverage for ${thresholdKey} (${coverage}%) does not meet`;
 
 					if (!this.options.perFile) {
-						errorMessage += " global";
+						errorMessage += ' global';
 					}
 
 					errorMessage += ` threshold (${threshold}%)`;
 
 					if (this.options.perFile && file) {
-						errorMessage += ` for ${relative("./", file).replace(/\\/g, "/")}`;
+						errorMessage += ` for ${relative('./', file).replace(/\\/g, '/')}`;
 					}
 
 					console.error(errorMessage);
@@ -330,7 +330,7 @@ export class GithubIstanbulCoverageProvider
 
 		for (const { transformResult, filename } of transformResults) {
 			const sourceMap =
-				transformResult?.map as unknown as Instrumenter["sourceMap"];
+				transformResult?.map as unknown as Instrumenter['sourceMap'];
 			const code = transformResult?.code;
 
 			if (sourceMap && code) {
@@ -351,7 +351,7 @@ export class GithubIstanbulCoverageProvider
  * - To `/src/components/Header.component.ts`
  */
 function removeQueryParameters(filename: string) {
-	return filename.split("?")[0];
+	return filename.split('?')[0];
 }
 
 function isEmptyCoverageRange(range: libCoverage.Range) {
@@ -370,7 +370,7 @@ function includeImplicitElseBranches(coverageMap: CoverageMap) {
 		const fileCoverage = coverageMap.fileCoverageFor(file);
 
 		for (const branchMap of Object.values(fileCoverage.branchMap)) {
-			if (branchMap.type !== "if") {
+			if (branchMap.type !== 'if') {
 				continue;
 			}
 
