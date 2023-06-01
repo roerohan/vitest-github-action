@@ -112,7 +112,7 @@ ${error.stack}` : "Vitest Error",
 // src/action.ts
 async function main() {
   const configFile = getInput("config");
-  const coverage = Boolean(getInput("coverage"));
+  const coverage = Boolean(getInput("coverage")) ?? true;
   const vitest = await startVitest("test", [], {
     watch: false,
     config: configFile
@@ -120,7 +120,9 @@ async function main() {
     test: {
       reporters: [new GithubReporter(), "default"],
       coverage: {
-        enabled: coverage
+        enabled: coverage,
+        provider: "custom",
+        customProviderModule: "github-istanbul-coverage-provider"
       }
     }
   });
