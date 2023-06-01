@@ -2,5 +2,10 @@ node_modules/
 dist/*
 !dist/action.mjs
 !dist/action.js
+!dist/github-istanbul-coverage-provider.js
+!dist/github-istanbul-coverage-provider.mjs
 build/
 types/
+coverage/
+!src/coverage
+

@@ -1,3 +1,102 @@
+## [1.3.8](https://github.com/roerohan/vitest-github-action/compare/v1.3.7...v1.3.8) (2023-05-31)
+
+
+### Bug Fixes
+
+* intialize octokit only if reporter is enabled ([37b3c14](https://github.com/roerohan/vitest-github-action/commit/37b3c14fd0d2bb1e399544a75b7b0d72365b057d))
+
+## [1.3.7](https://github.com/roerohan/vitest-github-action/compare/v1.3.6...v1.3.7) (2023-05-31)
+
+
+### Bug Fixes
+
+* import commonjs export ([d3c17f9](https://github.com/roerohan/vitest-github-action/commit/d3c17f99aedb23f030ee0fa1d7c44b129ee93bc2))
+
+## [1.3.6](https://github.com/roerohan/vitest-github-action/compare/v1.3.5...v1.3.6) (2023-05-31)
+
+
+### Bug Fixes
+
+* remove default export ([f6af523](https://github.com/roerohan/vitest-github-action/commit/f6af52363103a74bfa56c8924456b35799fa8712))
+
+## [1.3.5](https://github.com/roerohan/vitest-github-action/compare/v1.3.4...v1.3.5) (2023-05-31)
+
+
+### Bug Fixes
+
+* update to use esm only ([558d729](https://github.com/roerohan/vitest-github-action/commit/558d729e47505bd24f28d5eef0c0af572f82f77a))
+
+## [1.3.4](https://github.com/roerohan/vitest-github-action/compare/v1.3.3...v1.3.4) (2023-05-31)
+
+
+### Bug Fixes
+
+* update to use esm only ([4b1198b](https://github.com/roerohan/vitest-github-action/commit/4b1198b940dade4d8463b01910452e5f22acd4c6))
+
+## [1.3.3](https://github.com/roerohan/vitest-github-action/compare/v1.3.2...v1.3.3) (2023-05-31)
+
+
+### Bug Fixes
+
+* added module key ([84b08b3](https://github.com/roerohan/vitest-github-action/commit/84b08b34aed883cb7d29dceab922ec0bfb317e72))
+* use type module ([5974af5](https://github.com/roerohan/vitest-github-action/commit/5974af51216efc097687b89469b4f2e5d5fe2d96))
+
+## [1.3.2](https://github.com/roerohan/vitest-github-action/compare/v1.3.1...v1.3.2) (2023-05-30)
+
+
+### Bug Fixes
+
+* remove main key ([34308db](https://github.com/roerohan/vitest-github-action/commit/34308db0f7230bf9fdd15f576e5545868d9597cf))
+
+## [1.3.1](https://github.com/roerohan/vitest-github-action/compare/v1.3.0...v1.3.1) (2023-05-30)
+
+
+### Bug Fixes
+
+* use esm only ([b095ccf](https://github.com/roerohan/vitest-github-action/commit/b095ccfc580ccefd39c19eee3a7ff2fdbb4d7e5d))
+
+# [1.3.0](https://github.com/roerohan/vitest-github-action/compare/v1.2.3...v1.3.0) (2023-05-30)
+
+
+### Features
+
+* use entire istanbul coverage file ([#13](https://github.com/roerohan/vitest-github-action/issues/13)) ([8a9d7c8](https://github.com/roerohan/vitest-github-action/commit/8a9d7c8af6b0752ce7a1562c3b46958c76518c51))
+
+## [1.2.3](https://github.com/roerohan/vitest-github-action/compare/v1.2.2...v1.2.3) (2023-05-30)
+
+
+### Bug Fixes
+
+* update readme and action ([319f065](https://github.com/roerohan/vitest-github-action/commit/319f0659be29dcefc6fa9a9dcf992b420407a8a8))
+
+## [1.2.2](https://github.com/roerohan/vitest-github-action/compare/v1.2.1...v1.2.2) (2023-05-30)
+
+
+### Bug Fixes
+
+* use esm ([edfc53a](https://github.com/roerohan/vitest-github-action/commit/edfc53aaf89d7d941697d42191defdc72c97c842))
+
+## [1.2.1](https://github.com/roerohan/vitest-github-action/compare/v1.2.0...v1.2.1) (2023-05-30)
+
+
+### Bug Fixes
+
+* use cjs ([cd68c4c](https://github.com/roerohan/vitest-github-action/commit/cd68c4c0644ef9cbc6f2e5e59cad174772b668bc))
+
+# [1.2.0](https://github.com/roerohan/vitest-github-action/compare/v1.1.2...v1.2.0) (2023-05-30)
+
+
+### Features
+
+* added coverage module ([#12](https://github.com/roerohan/vitest-github-action/issues/12)) ([aeeeaba](https://github.com/roerohan/vitest-github-action/commit/aeeeabaae5a2bb5e0348de5805649b013ed90f0b))
+
+## [1.1.2](https://github.com/roerohan/vitest-github-action/compare/v1.1.1...v1.1.2) (2023-05-17)
+
+
+### Bug Fixes
+
+* update action.ts and sample action ([1b8c78d](https://github.com/roerohan/vitest-github-action/commit/1b8c78d53c5f1463d9ddb9c36e0e5968604549e9))
+
 ## [1.1.1](https://github.com/roerohan/vitest-github-action/compare/v1.1.0...v1.1.1) (2023-05-17)
 
 

@@ -4,9 +4,8 @@ export default defineConfig([
 	{
 		entry: ['src/index.ts'],
 		target: 'node14.16',
-		format: ['cjs', 'esm'],
+		format: ['esm'],
 		dts: true,
-		sourcemap: true,
 		clean: true,
 	},
 	{
@@ -14,7 +13,13 @@ export default defineConfig([
 		target: 'node18',
 		format: ['esm'],
 		dts: true,
-		sourcemap: true,
+		clean: true,
+	},
+	{
+		entry: ['src/github-istanbul-coverage-provider.ts'],
+		target: 'node18',
+		format: ['esm'],
+		dts: false,
 		clean: true,
 	},
 ]);

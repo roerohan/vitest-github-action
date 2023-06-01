@@ -1,4 +1,4 @@
 import GithubReporter from './GithubReporter';
+import GithubIstanbulCoverageProviderModule from './coverage/GithubIstanbulCoverageProviderModule';
 
-export {GithubReporter};
-export default GithubReporter;
+export {GithubReporter, GithubIstanbulCoverageProviderModule};
