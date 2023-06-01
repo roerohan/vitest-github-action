@@ -204,7 +204,7 @@ export class GithubIstanbulCoverageProvider
 					continue;
 				}
 
-				if ((reporter[0] as string) === "github-summary") {
+				if ((reporter[0] as string) === 'github-summary') {
 					new GithubSummaryIstanbulCoverageReporter({
 						github,
 						octokit,
