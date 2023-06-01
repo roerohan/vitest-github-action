@@ -1,6 +1,7 @@
 // src/action.ts
 import { getInput } from "@actions/core";
 import { startVitest } from "vitest/node";
+import { join } from "path";
 
 // src/GithubReporter.ts
 import { endGroup, startGroup, error as actionsError } from "@actions/core";
@@ -112,7 +113,7 @@ ${error.stack}` : "Vitest Error",
 // src/action.ts
 async function main() {
   const configFile = getInput("config");
-  const coverage = Boolean(getInput("coverage")) ?? true;
+  const coverage = Boolean(getInput("coverage") ?? true);
   const vitest = await startVitest("test", [], {
     watch: false,
     config: configFile
@@ -122,7 +123,7 @@ async function main() {
       coverage: {
         enabled: coverage,
         provider: "custom",
-        customProviderModule: "github-istanbul-coverage-provider"
+        customProviderModule: join(__dirname, "github-istanbul-coverage-provider")
       }
     }
   });
