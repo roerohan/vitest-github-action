@@ -1,3 +1,10 @@
+## [1.3.8](https://github.com/roerohan/vitest-github-action/compare/v1.3.7...v1.3.8) (2023-05-31)
+
+
+### Bug Fixes
+
+* intialize octokit only if reporter is enabled ([37b3c14](https://github.com/roerohan/vitest-github-action/commit/37b3c14fd0d2bb1e399544a75b7b0d72365b057d))
+
 ## [1.3.7](https://github.com/roerohan/vitest-github-action/compare/v1.3.6...v1.3.7) (2023-05-31)
 
 
