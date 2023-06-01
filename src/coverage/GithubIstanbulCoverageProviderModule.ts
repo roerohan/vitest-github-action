@@ -31,6 +31,7 @@ import {BaseCoverageProvider} from 'vitest/coverage';
 import {type Instrumenter, createInstrumenter} from 'istanbul-lib-instrument';
 import _TestExclude from 'test-exclude';
 import github from '@actions/github';
+import {error} from '@actions/core';
 
 type TestExclude = new (opts: {
 	cwd?: string | string[];
@@ -57,6 +58,13 @@ type Options = ResolvedCoverageOptions<'istanbul'>;
 
 export type Octokit = ReturnType<typeof github.getOctokit>;
 export type Github = typeof github;
+
+const {
+	GITHUB_TOKEN: githubTokenEnv = '',
+	GH_TOKEN: ghTokenEnv = '',
+} = process.env ?? {};
+
+const githubToken = githubTokenEnv ?? ghTokenEnv;
 
 export class GithubIstanbulCoverageProvider
 	extends BaseCoverageProvider
@@ -194,7 +202,12 @@ export class GithubIstanbulCoverageProvider
 
 		for (const reporter of this.options.reporter) {
 			if (['github', 'github-summary'].includes(reporter[0])) {
-				const octokit: Octokit = github.getOctokit(process.env?.GITHUB_TOKEN ?? '');
+				if (!githubToken) {
+					error(`[${this.name}] Could not report coverage to PR as GITHUB_TOKEN or GH_TOKEN environment variable was not found. Skipping to the next reporter.`);
+					continue;
+				}
+
+				const octokit: Octokit = github.getOctokit(githubToken);
 				if ((reporter[0] as string) === 'github') {
 					new GithubIstanbulCoverageReporter({
 						github,
