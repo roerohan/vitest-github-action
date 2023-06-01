@@ -1,3 +1,17 @@
+## [1.3.14](https://github.com/roerohan/vitest-github-action/compare/v1.3.13...v1.3.14) (2023-06-01)
+
+
+### Bug Fixes
+
+* use github summary package ([a386e69](https://github.com/roerohan/vitest-github-action/commit/a386e6919a8d28774a96e536a5775f490abed333))
+
+## [1.3.13](https://github.com/roerohan/vitest-github-action/compare/v1.3.12...v1.3.13) (2023-06-01)
+
+
+### Bug Fixes
+
+* better error handling if token not found ([d434c8a](https://github.com/roerohan/vitest-github-action/commit/d434c8a1a5b1500d940d22b033b45a6810e58c1d))
+
 ## [1.3.12](https://github.com/roerohan/vitest-github-action/compare/v1.3.11...v1.3.12) (2023-06-01)
 
 

@@ -31,6 +31,7 @@ import {BaseCoverageProvider} from 'vitest/coverage';
 import {type Instrumenter, createInstrumenter} from 'istanbul-lib-instrument';
 import _TestExclude from 'test-exclude';
 import github from '@actions/github';
+import {error} from '@actions/core';
 
 type TestExclude = new (opts: {
 	cwd?: string | string[];
@@ -57,6 +58,13 @@ type Options = ResolvedCoverageOptions<'istanbul'>;
 
 export type Octokit = ReturnType<typeof github.getOctokit>;
 export type Github = typeof github;
+
+const {
+	GITHUB_TOKEN: githubTokenEnv = '',
+	GH_TOKEN: ghTokenEnv = '',
+} = process.env ?? {};
+
+const githubToken = githubTokenEnv ?? ghTokenEnv;
 
 export class GithubIstanbulCoverageProvider
 	extends BaseCoverageProvider
@@ -194,8 +202,13 @@ export class GithubIstanbulCoverageProvider
 
 		for (const reporter of this.options.reporter) {
 			if (['github', 'github-summary'].includes(reporter[0])) {
-				const octokit: Octokit = github.getOctokit(process.env?.GITHUB_TOKEN ?? '');
-				if ((reporter[0] as string) === "github") {
+				if (!githubToken) {
+					error(`[${this.name}] Could not report coverage to PR as GITHUB_TOKEN or GH_TOKEN environment variable was not found. Skipping to the next reporter.`);
+					continue;
+				}
+
+				const octokit: Octokit = github.getOctokit(githubToken);
+				if ((reporter[0] as string) === 'github') {
 					new GithubIstanbulCoverageReporter({
 						github,
 						octokit,
@@ -204,7 +217,7 @@ export class GithubIstanbulCoverageProvider
 					continue;
 				}
 
-				if ((reporter[0] as string) === "github-summary") {
+				if ((reporter[0] as string) === 'github-summary') {
 					new GithubSummaryIstanbulCoverageReporter({
 						github,
 						octokit,
@@ -272,10 +285,10 @@ export class GithubIstanbulCoverageProvider
 		// Check thresholds of each summary
 		for (const { summary, file } of summaries) {
 			for (const thresholdKey of [
-				"lines",
-				"functions",
-				"statements",
-				"branches",
+				'lines',
+				'functions',
+				'statements',
+				'branches',
 			] as const) {
 				const threshold = thresholds[thresholdKey];
 
@@ -296,13 +309,13 @@ export class GithubIstanbulCoverageProvider
 					let errorMessage = `ERROR: Coverage for ${thresholdKey} (${coverage}%) does not meet`;
 
 					if (!this.options.perFile) {
-						errorMessage += " global";
+						errorMessage += ' global';
 					}
 
 					errorMessage += ` threshold (${threshold}%)`;
 
 					if (this.options.perFile && file) {
-						errorMessage += ` for ${relative("./", file).replace(/\\/g, "/")}`;
+						errorMessage += ` for ${relative('./', file).replace(/\\/g, '/')}`;
 					}
 
 					console.error(errorMessage);
@@ -330,7 +343,7 @@ export class GithubIstanbulCoverageProvider
 
 		for (const { transformResult, filename } of transformResults) {
 			const sourceMap =
-				transformResult?.map as unknown as Instrumenter["sourceMap"];
+				transformResult?.map as unknown as Instrumenter['sourceMap'];
 			const code = transformResult?.code;
 
 			if (sourceMap && code) {
@@ -351,7 +364,7 @@ export class GithubIstanbulCoverageProvider
  * - To `/src/components/Header.component.ts`
  */
 function removeQueryParameters(filename: string) {
-	return filename.split("?")[0];
+	return filename.split('?')[0];
 }
 
 function isEmptyCoverageRange(range: libCoverage.Range) {
@@ -370,7 +383,7 @@ function includeImplicitElseBranches(coverageMap: CoverageMap) {
 		const fileCoverage = coverageMap.fileCoverageFor(file);
 
 		for (const branchMap of Object.values(fileCoverage.branchMap)) {
-			if (branchMap.type !== "if") {
+			if (branchMap.type !== 'if') {
 				continue;
 			}
 
