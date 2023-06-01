@@ -1,3 +1,10 @@
+## [1.3.10](https://github.com/roerohan/vitest-github-action/compare/v1.3.9...v1.3.10) (2023-06-01)
+
+
+### Bug Fixes
+
+* use action.js ([c47a823](https://github.com/roerohan/vitest-github-action/commit/c47a823b93a64fe11debab2cb6b4c14449900802))
+
 ## [1.3.9](https://github.com/roerohan/vitest-github-action/compare/v1.3.8...v1.3.9) (2023-06-01)
 
 
