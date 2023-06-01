@@ -1,9 +1,9 @@
 import libReport from 'istanbul-lib-report';
 import type {Github, Octokit} from './GithubIstanbulCoverageProviderModule';
 import {getAttributeRow, getStatus} from './helper';
+import {summary} from '@actions/core';
 
 const htmlTableStart = `
-<h2>Coverage Summary</h2>
 <table>
   <thead>
     <tr>
@@ -18,7 +18,6 @@ const htmlTableStart = `
 `;
 
 const htmlFilesTableStart = `
-<h2>Coverage Summary for all files</h2>
 <table>
   <thead>
     <tr>
@@ -100,6 +99,16 @@ class GithubSummaryIstanbulCoverageReporter extends libReport.ReportBase {
 		this.report += htmlTableEnd;
 		this.filesReport += htmlTableEnd;
 
+		const reportSummary = summary
+			.addHeading('Coverage Summary')
+			.addRaw(this.report)
+			.stringify();
+
+		const filesReportSummary = summary
+			.addHeading('Coverage Summary for all Files')
+			.addDetails('Click to expand', this.filesReport)
+			.stringify();
+
 		const prNumber = this.github.context.payload.pull_request?.number;
 
 		if (prNumber) {
@@ -109,7 +118,7 @@ class GithubSummaryIstanbulCoverageReporter extends libReport.ReportBase {
 				repo: this.github.context.repo.repo,
 				// eslint-disable-next-line @typescript-eslint/naming-convention
 				issue_number: prNumber,
-				body: this.report,
+				body: reportSummary,
 			});
 
 			// NOTE(roerohan): Report filewise summary
@@ -118,7 +127,7 @@ class GithubSummaryIstanbulCoverageReporter extends libReport.ReportBase {
 				repo: this.github.context.repo.repo,
 				// eslint-disable-next-line @typescript-eslint/naming-convention
 				issue_number: prNumber,
-				body: this.filesReport,
+				body: filesReportSummary,
 			});
 		}
 	}
