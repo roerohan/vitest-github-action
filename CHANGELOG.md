@@ -1,3 +1,10 @@
+## [1.3.9](https://github.com/roerohan/vitest-github-action/compare/v1.3.8...v1.3.9) (2023-06-01)
+
+
+### Bug Fixes
+
+* github action components ([#14](https://github.com/roerohan/vitest-github-action/issues/14)) ([74000a8](https://github.com/roerohan/vitest-github-action/commit/74000a894dcfa6c650ef24d1706c10897d6e3723))
+
 ## [1.3.8](https://github.com/roerohan/vitest-github-action/compare/v1.3.7...v1.3.8) (2023-05-31)
 
 
