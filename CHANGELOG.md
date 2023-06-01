@@ -1,3 +1,10 @@
+## [1.3.12](https://github.com/roerohan/vitest-github-action/compare/v1.3.11...v1.3.12) (2023-06-01)
+
+
+### Bug Fixes
+
+* added __dirname ([60499dc](https://github.com/roerohan/vitest-github-action/commit/60499dcf76dabe6a8711f95621ab7ffa495ffdb1))
+
 ## [1.3.11](https://github.com/roerohan/vitest-github-action/compare/v1.3.10...v1.3.11) (2023-06-01)
 
 
