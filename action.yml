@@ -1,17 +1,17 @@
-name: 'roerohan/vitest'
-description: 'Run vitest tests and report the results and coverage on pull requests raised on your repository.'
-author: 'roerohan'
+name: "roerohan/vitest"
+description: "Run vitest tests and report the results and coverage on pull requests raised on your repository."
+author: "roerohan"
 inputs:
   config:
     required: false
-    description: 'Path to vitest configuration file (example: vite.config.ts, or vitest.config.ts, default resolving to `vitest.config.*`, `vite.config.*`)'
+    description: "Path to vitest configuration file (example: vite.config.ts, or vitest.config.ts, default resolving to `vitest.config.*`, `vite.config.*`)"
   coverage:
     required: false
-    description: 'When `coverage` is set to true, the coverage report is attached to the PR.'
-    default: 'true'
+    description: "When `coverage` is set to true, the coverage report is attached to the PR."
+    default: "true"
 runs:
-  using: 'node16'
-  main: 'dist/action.mjs'
+  using: "node16"
+  main: "dist/action.js"
 branding:
-  icon: 'check-square'
-  color: 'green'
+  icon: "check-square"
+  color: "green"
