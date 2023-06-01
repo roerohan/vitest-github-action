@@ -104,7 +104,7 @@ class GithubSummaryIstanbulCoverageReporter extends libReport.ReportBase {
 			.addRaw(this.report)
 			.stringify();
 
-		summary.clear();
+		await summary.clear();
 		const filesReportSummary = summary
 			.addHeading('Coverage Summary for all Files')
 			.addDetails('Click to expand', this.filesReport)
