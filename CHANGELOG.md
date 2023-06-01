@@ -5,6 +5,13 @@
 
 * added summary.clear ([7b2aaac](https://github.com/roerohan/vitest-github-action/commit/7b2aaace30db88e02cd302bd6b0ed29eb4b446c2))
 
+## [1.3.15](https://github.com/roerohan/vitest-github-action/compare/v1.3.14...v1.3.15) (2023-06-01)
+
+
+### Bug Fixes
+
+* added summary.clear ([7b2aaac](https://github.com/roerohan/vitest-github-action/commit/7b2aaace30db88e02cd302bd6b0ed29eb4b446c2))
+
 ## [1.3.14](https://github.com/roerohan/vitest-github-action/compare/v1.3.13...v1.3.14) (2023-06-01)
 
 
