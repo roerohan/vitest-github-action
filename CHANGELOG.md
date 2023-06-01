@@ -1,3 +1,11 @@
+## [1.3.11](https://github.com/roerohan/vitest-github-action/compare/v1.3.10...v1.3.11) (2023-06-01)
+
+
+### Bug Fixes
+
+* use coverage module from current path ([346f1c7](https://github.com/roerohan/vitest-github-action/commit/346f1c79a860676881adacbc016af0f27334a72e))
+* use coverage module from current path ([b68766d](https://github.com/roerohan/vitest-github-action/commit/b68766d721bd02603c796c7f5d75e57b0fc15a3f))
+
 ## [1.3.10](https://github.com/roerohan/vitest-github-action/compare/v1.3.9...v1.3.10) (2023-06-01)
 
 
