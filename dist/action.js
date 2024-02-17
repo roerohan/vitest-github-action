@@ -1,4 +1,5 @@
 // src/action.ts
+import * as url from "url";
 import { getInput } from "@actions/core";
 import { startVitest } from "vitest/node";
 import { join } from "path";
@@ -114,6 +115,7 @@ ${error.stack}` : "Vitest Error",
 async function main() {
   const configFile = getInput("config");
   const coverage = Boolean(getInput("coverage") ?? true);
+  const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
   const vitest = await startVitest("test", [], {
     watch: false,
     config: configFile
