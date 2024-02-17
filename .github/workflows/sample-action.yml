@@ -17,7 +17,6 @@ jobs:
       - name: Run `npm install`
         run: |
           npm install
-          npm run build
 
       - name: Run vitest and report issues
         uses: roerohan/vitest-github-action@v1.3.16-testing.4
