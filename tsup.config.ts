@@ -1,4 +1,4 @@
-import {defineConfig} from 'tsup';
+import { defineConfig } from 'tsup';
 
 export default defineConfig([
 	{
@@ -16,6 +16,7 @@ export default defineConfig([
 		clean: true,
 		noExternal: ['@actions/core', 'vitest'],
 		external: ['lightningcss', '@vitest/ui', '@vitest/browser', '@edge-runtime/vm', 'happy-dom', 'jsdom'],
+		splitting: false,
 	},
 	{
 		entry: ['src/github-istanbul-coverage-provider.ts'],
