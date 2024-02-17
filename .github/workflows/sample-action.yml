@@ -1,4 +1,4 @@
-name: "Run vitest tests"
+name: "Run vitest tests - using roerohan/vitest-github-action@version"
 on:
   pull_request:
     branches:
@@ -17,15 +17,8 @@ jobs:
       - name: Run `npm install`
         run: |
           npm install
-          npm run build
 
       - name: Run vitest and report issues
-        uses: ./
-        with:
-          config: ./vitest.config.ts
-
-      - name: Run vitest and report issues
-        if: always()
-        uses: roerohan/vitest-github-action@v1
+        uses: roerohan/vitest-github-action@v1.3.16-testing.6
         with:
           config: ./vitest.config.ts

@@ -1,5 +1,8 @@
 import libReport from 'istanbul-lib-report';
-import type {Github, Octokit} from './GithubIstanbulCoverageProviderModule';
+import type github from '@actions/github';
+
+export type Octokit = ReturnType<typeof github.getOctokit>;
+export type Github = typeof github;
 
 class GithubIstanbulCoverageReporter extends libReport.ReportBase {
 	octokit: Octokit;
