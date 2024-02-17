@@ -14,7 +14,8 @@ export default defineConfig([
 		format: ['esm'],
 		dts: true,
 		clean: true,
-		noExternal: ['@actions/core'],
+		noExternal: ['@actions/core', 'vitest/node'],
+		external: ['lightningcss', '@vitest/ui', '@vitest/browser', '@edge-runtime/vm', 'happy-dom', 'jsdom'],
 	},
 	{
 		entry: ['src/github-istanbul-coverage-provider.ts'],
