@@ -25878,6 +25878,7 @@ var GithubIstanbulCoverageProvider = class extends BaseCoverageProvider {
     this.pendingPromises = [];
   }
   async reportCoverage({ allTestsRun } = {}) {
+    info(`${this.name} Running`);
     const coverageMap = import_istanbul_lib_coverage.default.createCoverageMap({});
     let index = 0;
     const total = this.pendingPromises.length;

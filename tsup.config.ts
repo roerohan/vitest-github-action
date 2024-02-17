@@ -14,6 +14,7 @@ export default defineConfig([
 		format: ['esm'],
 		dts: true,
 		clean: true,
+		noExternal: ['@actions/core'],
 	},
 	{
 		entry: ['src/github-istanbul-coverage-provider.ts'],

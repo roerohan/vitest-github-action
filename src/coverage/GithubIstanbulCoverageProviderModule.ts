@@ -188,6 +188,7 @@ export class GithubIstanbulCoverageProvider extends BaseCoverageProvider impleme
 	}
 
 	async reportCoverage({ allTestsRun }: ReportContext = {}) {
+		info(`${this.name} Running`);
 		const coverageMap = libCoverage.createCoverageMap({});
 		let index = 0;
 		const total = this.pendingPromises.length;
