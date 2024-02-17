@@ -1,3 +1,10 @@
+## [1.3.16](https://github.com/roerohan/vitest-github-action/compare/v1.3.15...v1.3.16) (2024-02-17)
+
+
+### Bug Fixes
+
+* update package-lock deps ([0b1ffb7](https://github.com/roerohan/vitest-github-action/commit/0b1ffb7b55d5886e91d1d76334218d559978b9bb))
+
 ## [1.3.15](https://github.com/roerohan/vitest-github-action/compare/v1.3.14...v1.3.15) (2023-06-01)
 
 
