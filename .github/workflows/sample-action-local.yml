@@ -1,4 +1,4 @@
-name: "Run vitest tests - using roerohan/vitest-github-action@version"
+name: "Run vitest tests - (using ./)"
 on:
   pull_request:
     branches:
@@ -20,6 +20,6 @@ jobs:
           npm run build
 
       - name: Run vitest and report issues
-        uses: roerohan/vitest-github-action@v1
+        uses: ./
         with:
           config: ./vitest.config.ts
