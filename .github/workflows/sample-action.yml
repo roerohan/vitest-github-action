@@ -20,6 +20,6 @@ jobs:
           npm run build
 
       - name: Run vitest and report issues
-        uses: roerohan/vitest-github-action@v1.3.16-testing.1
+        uses: roerohan/vitest-github-action@v1.3.16-testing.2
         with:
           config: ./vitest.config.ts
