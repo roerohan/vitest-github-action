@@ -14,7 +14,7 @@ export default defineConfig([
 		format: ['esm'],
 		dts: true,
 		clean: true,
-		noExternal: ['@actions/core', 'vitest/node'],
+		noExternal: ['@actions/core', 'vitest'],
 		external: ['lightningcss', '@vitest/ui', '@vitest/browser', '@edge-runtime/vm', 'happy-dom', 'jsdom'],
 	},
 	{
