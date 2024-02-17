@@ -19,7 +19,7 @@ import libCoverage from 'istanbul-lib-coverage';
 import libSourceMaps from 'istanbul-lib-source-maps';
 import {type Instrumenter, createInstrumenter} from 'istanbul-lib-instrument';
 import github from '@actions/github';
-import {error} from '@actions/core';
+import {error, info} from '@actions/core';
 import GithubIstanbulCoverageReporter from './GithubIstanbulCoverageReporter';
 import GithubSummaryIstanbulCoverageReporter from './GithubSummaryIstanbulCoverageReporter';
 
@@ -238,6 +238,7 @@ export class GithubIstanbulCoverageProvider extends BaseCoverageProvider impleme
 		}
 
 		for (const reporter of this.options.reporter) {
+			info(`${this.name} Running reporter ${reporter[0]}`);
 			if (['github', 'github-summary'].includes(reporter[0])) {
 				if (!githubToken) {
 					error(`[${this.name}] Could not report coverage to PR as GITHUB_TOKEN or GH_TOKEN environment variable was not found. Skipping to the next reporter.`);
