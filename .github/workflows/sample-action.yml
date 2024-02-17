@@ -19,6 +19,6 @@ jobs:
           npm install
 
       - name: Run vitest and report issues
-        uses: roerohan/vitest-github-action@v1.3.16-testing.5
+        uses: roerohan/vitest-github-action@v1.3.16-testing.6
         with:
           config: ./vitest.config.ts
