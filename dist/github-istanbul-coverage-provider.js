@@ -682,8 +682,8 @@ var getAttributeRow = (attribute) => `<td align="center">${attribute.pct}% (${at
 `;
 
 // src/coverage/GithubSummaryIstanbulCoverageReporter.ts
+import { summary } from "@actions/core";
 var htmlTableStart = `
-<h2>Coverage Summary</h2>
 <table>
   <thead>
     <tr>
@@ -697,7 +697,6 @@ var htmlTableStart = `
   <tbody>
 `;
 var htmlFilesTableStart = `
-<h2>Coverage Summary for all files</h2>
 <table>
   <thead>
     <tr>
@@ -763,6 +762,9 @@ var GithubSummaryIstanbulCoverageReporter = class extends libReport2.ReportBase 
   async onEnd() {
     this.report += htmlTableEnd;
     this.filesReport += htmlTableEnd;
+    const reportSummary = summary.addHeading("Coverage Summary").addRaw(this.report).stringify();
+    await summary.clear();
+    const filesReportSummary = summary.addHeading("Coverage Summary for all Files").addDetails("Click to expand", this.filesReport).stringify();
     const prNumber = this.github.context.payload.pull_request?.number;
     if (prNumber) {
       await this.octokit.rest.issues.createComment({
@@ -770,14 +772,14 @@ var GithubSummaryIstanbulCoverageReporter = class extends libReport2.ReportBase 
         repo: this.github.context.repo.repo,
         // eslint-disable-next-line @typescript-eslint/naming-convention
         issue_number: prNumber,
-        body: this.report
+        body: reportSummary
       });
       await this.octokit.rest.issues.createComment({
         owner: this.github.context.repo.owner,
         repo: this.github.context.repo.repo,
         // eslint-disable-next-line @typescript-eslint/naming-convention
         issue_number: prNumber,
-        body: this.filesReport
+        body: filesReportSummary
       });
     }
   }
@@ -907,6 +909,7 @@ import { BaseCoverageProvider } from "vitest/coverage";
 import { createInstrumenter } from "istanbul-lib-instrument";
 import _TestExclude from "test-exclude";
 import github from "@actions/github";
+import { error } from "@actions/core";
 var githubIstanbulCoverageProviderModule = {
   getProvider() {
     return new GithubIstanbulCoverageProvider();
@@ -914,6 +917,11 @@ var githubIstanbulCoverageProviderModule = {
   // Implements rest of the CoverageProviderModule ...
 };
 var coverageStorageKey = "__VITEST_COVERAGE__";
+var {
+  GITHUB_TOKEN: githubTokenEnv = "",
+  GH_TOKEN: ghTokenEnv = ""
+} = process.env ?? {};
+var githubToken = githubTokenEnv ?? ghTokenEnv;
 var GithubIstanbulCoverageProvider = class extends BaseCoverageProvider {
   name = "github-istanbul";
   ctx;
@@ -1010,7 +1018,11 @@ var GithubIstanbulCoverageProvider = class extends BaseCoverageProvider {
     });
     for (const reporter of this.options.reporter) {
       if (["github", "github-summary"].includes(reporter[0])) {
-        const octokit = github.getOctokit(process.env?.GITHUB_TOKEN ?? "");
+        if (!githubToken) {
+          error(`[${this.name}] Could not report coverage to PR as GITHUB_TOKEN or GH_TOKEN environment variable was not found. Skipping to the next reporter.`);
+          continue;
+        }
+        const octokit = github.getOctokit(githubToken);
         if (reporter[0] === "github") {
           new GithubIstanbulCoverageReporter_default({
             github,
@@ -1066,7 +1078,7 @@ var GithubIstanbulCoverageProvider = class extends BaseCoverageProvider {
         summary: coverageMap.getCoverageSummary()
       }
     ];
-    for (const { summary, file } of summaries) {
+    for (const { summary: summary2, file } of summaries) {
       for (const thresholdKey of [
         "lines",
         "functions",
@@ -1077,7 +1089,7 @@ var GithubIstanbulCoverageProvider = class extends BaseCoverageProvider {
         if (!threshold) {
           continue;
         }
-        const coverage = summary.data[thresholdKey].pct;
+        const coverage = summary2.data[thresholdKey].pct;
         if (coverage < threshold) {
           process.exitCode = 1;
           let errorMessage = `ERROR: Coverage for ${thresholdKey} (${coverage}%) does not meet`;
