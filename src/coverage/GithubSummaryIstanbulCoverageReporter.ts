@@ -1,7 +1,10 @@
 import libReport from 'istanbul-lib-report';
-import type {Github, Octokit} from './GithubIstanbulCoverageProviderModule';
+import type github from '@actions/github';
 import {getAttributeRow, getStatus} from './helper';
 import {summary} from '@actions/core';
+
+export type Octokit = ReturnType<typeof github.getOctokit>;
+export type Github = typeof github;
 
 const htmlTableStart = `
 <table>
